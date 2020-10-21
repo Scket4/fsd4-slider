@@ -1,0 +1,54 @@
+$scale-width: 150px
+$grey: #c6c6c6  
+$green: #42B06C
+
+*
+  padding: 0
+  margin: 0
+  box-sizing: border-box
+
+.main
+  width: 500px
+  height: 500px
+  background: #e5e5e5
+  margin: 0 auto
+
+.slider
+  margin: 0 auto
+  width: 200px
+  height: 80px
+  background-color: #e5e5e4
+  display: flex
+  justify-content: center
+  align-items: center
+  &__numbers
+    width: $scale-width
+    height: 20px
+    margin-top: 20px
+    display: flex
+    justify-content: space-between
+    align-items: center 
+
+.scale
+  width: $scale-width
+  height: 5px  
+  background: $grey
+  border-radius: 10px
+  position: absolute
+  &__point
+    width: 10px
+    height: 10px
+    border-radius: 50%
+    background: $green
+    position: absolute
+    z-index: 2
+    left: 10px
+  &__select
+    position: absolute
+    width: 20%
+    height: 100%
+    left: 0
+    border-radius: 10px
+    background: $green
+    z-index: 1 
+
