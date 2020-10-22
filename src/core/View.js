@@ -4,4 +4,39 @@
 // Значение count поменялось - контроллер получает это изменение и передает его в вид.
 // Вид изменяет ползунок, выбранную область, счетчик исходя из переменной count 
 
-// Создать переменную scaleCount - Максимальная велечина в слайдере.
+const { isMouseDown } = require("./variables")
+
+class View {
+  getElement(selector) {
+    document.querySelector(selector)
+  }
+
+  setProperty(percent, el) {
+    el.style.setProperty(('--selectWidth', percent + '%'))
+  }
+}
+
+const view = new View()
+
+const point = view.getElement('.scale__point')
+const slider = view.getElement('.slider')
+const scale = view.getElement('.scale')
+const upPoint = view.getElement('.up-point')
+const body = document.body
+
+
+point.addEventListener('mousedown', e => {
+  position = e.screenX 
+  isMouseDown = true
+})
+
+body.addEventListener('mousemove', e => {
+  if (isMouseDown) {
+    currentPosition = e.screenX
+  }
+})
+
+body.addEventListener('click', e => {
+  isMouseDown = false
+  percent = currentPercent
+})
