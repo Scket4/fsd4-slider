@@ -4,19 +4,23 @@
 // Значение count поменялось - контроллер получает это изменение и передает его в вид.
 // Вид изменяет ползунок, выбранную область, счетчик исходя из переменной count 
 
+import { Controller } from "./Controller"
+
 const { isMouseDown } = require("./variables")
 
-class View {
+export class View {
   getElement(selector) {
     document.querySelector(selector)
   }
 
   setProperty(percent, el) {
+    upPoint.innerHTML = Math.floor(currentPercent)
     el.style.setProperty(('--selectWidth', percent + '%'))
   }
 }
 
 const view = new View()
+const controller = new Controller()
 
 const point = view.getElement('.scale__point')
 const slider = view.getElement('.slider')
@@ -38,5 +42,4 @@ body.addEventListener('mousemove', e => {
 
 body.addEventListener('click', e => {
   isMouseDown = false
-  percent = currentPercent
 })

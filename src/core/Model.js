@@ -1,6 +1,7 @@
 export class Model {
   constructor() {
-    this.activeScale = null
+    this.activeScale = null,
+    this.topPoint = null
   }
 
   activeScaleWidth(percent) {

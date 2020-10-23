@@ -1,4 +1,4 @@
-$scale-width: 250px
+$track-width: 500px
 $grey: #c6c6c6  
 $green: #42B06C
 // $select-width: 50%
@@ -16,8 +16,8 @@ body
   --selectWidth: 0%
 
 .main
-  width: 500px
-  height: 300px
+  width: 80%
+  height: 500px
   background: #026DA0
   display: flex
   justify-content: center
@@ -26,29 +26,31 @@ body
 
 .slider
   margin: 0 auto
-  width: 400px
-  height: 150px
+  width: 100%
+  height: 100%
   background-color: #fff
   display: flex
+  flex-direction: column
   justify-content: center
   align-items: center
   &__container
     display: flex
     justify-content: center
     align-items: center
-    width: 250px
-  &__numbers
-    width: $scale-width + 60px
+    width: 500px
+  &__scale
+    width: $track-width
     height: 20px
-    margin-top: 60px
+    margin-top: 10px
     display: flex
     justify-content: space-between
-    align-items: center 
+    align-items: flex-start
     font-size: 12px
+    border-top: 1px solid rgba(0, 0, 0, .4)
     color: rgba(0, 0, 0, .4)
 
-.scale
-  width: $scale-width
+.track
+  width: $track-width
   height: 7px  
   background: $grey
   border-radius: 10px
@@ -58,18 +60,18 @@ body
   -moz-user-select: none
   -ms-user-select: none
   &__point
-    width: 25px
-    height: 25px
+    width: 23px
+    height: 23px
     border-radius: 50%
     background: $green
     position: absolute
     z-index: 2
-    left: calc(var(--selectWidth) - 5%)
+    left: calc(var(--selectWidth) - 3%)
     top: -10px
     cursor: pointer
   &__select
     position: absolute
-    width: calc(var(--selectWidth) - 5%)
+    width: calc(var(--selectWidth) - 2%)
     height: 100%
     left: 0
     border-radius: 10px
@@ -81,7 +83,7 @@ body
   height: 30px
   border-radius: 5px
   position: absolute
-  left: calc(var(--selectWidth) - 5%)
+  left: calc(var(--selectWidth) - 4%)
   top: -45px   
   background: $green
   color: white
@@ -89,3 +91,48 @@ body
   justify-content: center
   align-items: center
   cursor: auto
+
+.scale__numbers
+  height: 7px
+  width: 1px
+  background: rgba(0, 0, 0, .4)
+  // &:nth-child(6)
+  //   height: 15px
+  // &:nth-child(11n),
+  // &:nth-child(1)
+  //   height: 25px
+
+.long__numbers
+  height: 25px 
+  position: relative
+  &-number
+    position: absolute
+    left: -2px
+    top: 28px
+
+.pre-long__numbers
+  height: 15px
+
+.settings 
+  width: $track-width
+  margin: 0 auto
+  height: 200px
+  background: black
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+  &__min-max
+    background: white
+    height: 33%
+    display: flex
+    justify-content: space-around
+    align-items: center
+    & input
+      border: 1px solid rgba(0, 0, 0, .4)
+      width: 50px
+      padding: 2px
+      color: rgba(0, 0, 0, .5)
+      &::placeholder
+        color: rgba(0, 0, 0, .4)
+      &:focus
+        outline: 1px solid rgba(0, 0, 0, .2)
