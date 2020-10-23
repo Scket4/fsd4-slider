@@ -1,10 +1,15 @@
 export class Model {
-  constructor(count, scaleCount) {
-    this.count = count,
-    this.scaleCount = scaleCount
+  constructor() {
+    this.activeScale = null,
+    this.topPoint = null
   }
 
- changeCount(newCount) {
-   this.count = newCount
- }
-}
+  activeScaleWidth(percent) {
+    if (percent !== 'undefined') {
+      this.activeScale = percent
+      return this
+    } 
+    return this.activeScale
+    }
+  } 
+
