@@ -14,20 +14,22 @@ body
   justify-content: center
   align-items: center
   --selectWidth: 0%
+  --selectLeft: 0px
 
 .main
   width: 80%
   height: 500px
-  background: #026DA0
+  background: white
   display: flex
+  flex-direction: column
   justify-content: center
   align-items: center
   margin-top: 200px
 
 .slider
   margin: 0 auto
-  width: 100%
-  height: 100%
+  width: auto
+  height: auto
   background-color: #fff
   display: flex
   flex-direction: column
@@ -37,7 +39,7 @@ body
     display: flex
     justify-content: center
     align-items: center
-    width: 500px
+    width: auto
   &__scale
     width: $track-width
     height: 20px
@@ -54,7 +56,7 @@ body
   height: 7px  
   background: $grey
   border-radius: 10px
-  position: absolute
+  position: relative
   cursor: pointer
   -webkit-user-select: none
   -moz-user-select: none
@@ -66,12 +68,12 @@ body
     background: $green
     position: absolute
     z-index: 2
-    left: calc(var(--selectWidth) - 3%)
+    left: calc(var(--selectWidth) - 2.5%)
     top: -10px
     cursor: pointer
   &__select
     position: absolute
-    width: calc(var(--selectWidth) - 2%)
+    width: var(--selectWidth)
     height: 100%
     left: 0
     border-radius: 10px
@@ -83,7 +85,7 @@ body
   height: 30px
   border-radius: 5px
   position: absolute
-  left: calc(var(--selectWidth) - 4%)
+  left: calc(var(--selectWidth) - 2.5%)
   top: -45px   
   background: $green
   color: white
@@ -132,6 +134,7 @@ body
       width: 50px
       padding: 2px
       color: rgba(0, 0, 0, .5)
+      border-radius: 5px
       &::placeholder
         color: rgba(0, 0, 0, .4)
       &:focus
