@@ -1,49 +1,57 @@
-// В каждом файле по классу создаешь. Потом в точке входа приложения импортируешь классы и создаешь объекты для каждого. Потом просто кидаешь объекты model и view в controller. А он уже организует обмен данными.
 // https://jinv.ru/range/
 import './styles/style.sass'
 
 
 const point = document.querySelector('.track__point')
 const upPoint = document.querySelector('.up-point')
-const body = document.body
 const scale = document.querySelector('.slider__scale')
+const track = document.querySelector('.track')
 
-// const newDiv = document.createElement('<div class="sliderMap"></div>')
 
-let sliderWidth = 500
-// let sliderStart = null
 
-let isMouseDown = false
-let position = null
+let position = 0
 let currentPosition = 0
 let currentWidth = null
 let persentSelect  = null
 let percent = 0
 let currentPercent = 0
-let inputValue = []
 
 
 
 // Мин и макс
-let sliderStart = 900
-let sliderEnd = 1000
+let sliderStart = 0
+let sliderEnd = 100
+let sliderWidth = 500
 
 const inputMin = document.querySelector('.input__min')
 const inputMax = document.querySelector('.input__max')
+const inputCurrent = document.querySelector('.input__current')
 
 inputMin.value = sliderStart
 inputMax.value = sliderEnd
+inputCurrent.value = 0
 
 inputMin.addEventListener('change', () => {
   sliderStart = inputMin.value
   destroy()
   init(sliderStart, sliderEnd)
+  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
+  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
 })
 
 inputMax.addEventListener('change', ()=> {
   sliderEnd = inputMax.value
   destroy()
   init(sliderStart, sliderEnd)
+  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
+  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
+})
+
+inputCurrent.addEventListener('change', () => {
+  inputCurrent.value = inputCurrent.value > 100 ? 100 : inputCurrent.value < 0 ? 0 : inputCurrent.value
+  document.body.style.setProperty('--selectWidth', inputCurrent.value + '%')
+  upPoint.innerHTML = inputCurrent.value
+  percent = inputCurrent.value * 100 / sliderEnd
 })
 
 // Конец кнопок min и max
@@ -74,25 +82,37 @@ function destroy() {
 }
 // Конец
 
-point.addEventListener('mousedown', e => {
-  position = e.screenX 
-  isMouseDown = true
-})
+// Перемещение ползунка
 
-body.addEventListener('mousemove', e => {
-  if (isMouseDown) {
+point.addEventListener('mousedown', e => {
+  position = e.screenX
+  document.onmousemove = (e) => {
     currentPosition = e.screenX
     currentWidth = position - currentPosition
     persentSelect = currentWidth / sliderWidth * -100
     currentPercent = (percent + persentSelect) > 100 
     ? 100 : (percent + persentSelect) < 0 
     ? 0 : (percent + persentSelect) 
-    upPoint.innerHTML = Math.floor(currentPercent)
-    document.body.style.setProperty('--selectWidth', currentPercent + '%')
+      upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
+      inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
+      document.body.style.setProperty('--selectWidth', currentPercent + '%')    
+  }
+  document.onmouseup = () => {
+    percent = currentPercent
+    document.onmousemove = document.onmouseup = null
   }
 })
 
-body.addEventListener('click', e => {
-  isMouseDown = false
+track.onclick = (e) => {
+  position = point.getBoundingClientRect().x
+  currentPosition = e.screenX
+  currentWidth = position - currentPosition
+  persentSelect = currentWidth / sliderWidth * -100
+  currentPercent = (percent + persentSelect) > 100 
+  ? 100 : (percent + persentSelect) < 0 
+  ? 0 : (percent + persentSelect) 
+  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
+  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
+  document.body.style.setProperty('--selectWidth', currentPercent + '%')
   percent = currentPercent
-})
+}
