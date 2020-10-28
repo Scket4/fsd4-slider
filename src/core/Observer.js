@@ -5,7 +5,6 @@ export class Observer {
 
   trigger(event, ...args) {
     if (!Array.isArray(this.listeners[event])) {
-      console.log('none');
       return false
     } 
     this.listeners[event].forEach(listener => {
@@ -17,6 +16,5 @@ export class Observer {
   subscribe(event, fn) {
     this.listeners[event] = this.listeners[event] || []
     this.listeners[event].push(fn)
-    console.log(this.listeners)
   }
 }

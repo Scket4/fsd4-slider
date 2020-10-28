@@ -1,45 +1,47 @@
-// Инициализирует и отображает компоненты. Меняем их по данной схеме:
-// Нажимаем мышь. Фиксируем положение по оси x в переменную. От этого значения отталкивается полузонк, пока не отпустим мышь.
-// Изменения в переменной отправляем в контроллер.Контроллер вызывает функцию changeCount в модели и меняет значение count.
-// Значение count поменялось - контроллер получает это изменение и передает его в вид.
-// Вид изменяет ползунок, выбранную область, счетчик исходя из переменной count 
+import { Slider } from "./Slider"
 
-import { Controller } from "./Controller"
-
-const { isMouseDown } = require("./variables")
-
-export class View {
-  getElement(selector) {
-    document.querySelector(selector)
+export class View extends Slider {
+  constructor() { 
+    super() 
+    this.point = document.querySelector('.track__point')
+    this.upPoint = document.querySelector('.up-point')
+    this.scale = document.querySelector('.slider__scale')
+    this.track = document.querySelector('.track')
   }
 
-  setProperty(percent, el) {
-    upPoint.innerHTML = Math.floor(currentPercent)
-    el.style.setProperty(('--selectWidth', percent + '%'))
+  renderSlider(selector) {
+    let track = (document.createElement('div'))
+    track.className  = 'track slider__track'
+    document.querySelector(selector).prepend(track)
+    track.insertAdjacentHTML('beforeend', '<div class="track__select"></div>')
+    track.insertAdjacentHTML('beforeend', '<div class="track__point"></div>')
+    track.insertAdjacentHTML('beforeend', '<div class="up-point">0</div>')
+  }
+  
+  renderScale(start, end) {
+    let long__numbers = null
+    const makeScale = index => {
+      // let scale = document.querySelector('.slider__scale')
+      this.scale.insertAdjacentHTML("beforeEnd", `<div class='scale__numbers long__numbers' id="${index}"></div>`)
+      long__numbers = document.getElementById(`${index}`)
+      long__numbers.insertAdjacentHTML("beforeend", `<div class="long__numbers-number">${index}</div>`)
+    }
+    for (let index = start; index <= end; index++) {
+      end > 390 ? 
+        index % 40 == 0 ?
+          makeScale(index) : false
+      : end > 100 ?
+        index % 20 == 0 ? 
+          makeScale(index) : false
+      : index % 10 == 0 ?
+         makeScale(index) : false 
+    }
+  }
+  
+  destroyScale() {
+    document.querySelectorAll('.scale__numbers').forEach(e => {
+      e.remove()
+    })
   }
 }
 
-const view = new View()
-const controller = new Controller()
-
-const point = view.getElement('.scale__point')
-const slider = view.getElement('.slider')
-const scale = view.getElement('.scale')
-const upPoint = view.getElement('.up-point')
-const body = document.body
-
-
-point.addEventListener('mousedown', e => {
-  position = e.screenX 
-  isMouseDown = true
-})
-
-body.addEventListener('mousemove', e => {
-  if (isMouseDown) {
-    currentPosition = e.screenX
-  }
-})
-
-body.addEventListener('click', e => {
-  isMouseDown = false
-})

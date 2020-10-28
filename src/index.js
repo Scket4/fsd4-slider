@@ -1,11 +1,26 @@
-// https://jinv.ru/range/
 import './styles/style.sass'
+// https://jinv.ru/range/
+import { Model } from './core/Model';
+import { Observer } from './core/Observer';
+import { Presenter } from './core/Presenter';
+import { View } from './core/View';
+
+class Main {
+  constructor(emit) {
+    this.view = new View(emit)
+    this.model = new Model(emit)
+    this.controller = new Presenter(emit)
+  }
+}
+
+let emitter = new Observer()
+let main = new Main(emitter)
+let view = new View(emitter)
 
 
-const point = document.querySelector('.track__point')
-const upPoint = document.querySelector('.up-point')
-const scale = document.querySelector('.slider__scale')
-const track = document.querySelector('.track')
+
+
+
 
 
 
@@ -20,7 +35,7 @@ let currentPercent = 0
 
 // Мин и макс
 let sliderStart = 0
-let sliderEnd = 100
+let sliderEnd = 200
 let sliderWidth = 500
 
 const inputMin = document.querySelector('.input__min')
@@ -33,16 +48,16 @@ inputCurrent.value = 0
 
 inputMin.addEventListener('change', () => {
   sliderStart = inputMin.value
-  destroy()
-  init(sliderStart, sliderEnd)
+  view.destroyScale()
+  view.renderScale(sliderStart, sliderEnd)
   upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
   inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
 })
 
 inputMax.addEventListener('change', ()=> {
   sliderEnd = inputMax.value
-  destroy()
-  init(sliderStart, sliderEnd)
+  view.destroyScale()
+  view.renderScale(sliderStart, sliderEnd)
   upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
   inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
 })
@@ -57,29 +72,20 @@ inputCurrent.addEventListener('change', () => {
 // Конец кнопок min и max
 
 // Генерируем шкалу в зависимости от мин и макс
-let long__numbers = null
 
-function init(start, end) {
-  for (let index = start; index <= end; index++) {
-    if (index % 10 == 0) {
-      scale.insertAdjacentHTML("beforeEnd", `<div class='scale__numbers long__numbers' id="${index}"></div>`)
-      long__numbers = document.getElementById(`${index}`)
-      long__numbers.insertAdjacentHTML("beforeend", `<div class="long__numbers-number">${index}</div>`)
-    } else if (index % 10 == 5){
-      scale.insertAdjacentHTML("beforeEnd", `<div class='scale__numbers pre-long__numbers'></div>`)
-    } else {
-      scale.insertAdjacentHTML("beforeEnd", `<div class='scale__numbers'></div>`)
-    }
-  }
-}
+// создание слайдера
 
-init(sliderStart, sliderEnd)
+view.renderSlider('.slider')
+view.renderScale(sliderStart, sliderEnd)
 
-function destroy() {
-  document.querySelectorAll('.scale__numbers').forEach(e => {
-    e.remove()
-  })
-}
+const point = document.querySelector('.track__point')
+const upPoint = document.querySelector('.up-point')
+const scale = document.querySelector('.slider__scale')
+const track = document.querySelector('.track')
+
+
+
+
 // Конец
 
 // Перемещение ползунка

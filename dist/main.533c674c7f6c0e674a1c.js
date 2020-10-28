@@ -64,6 +64,76 @@ eval("\r\n\r\nvar isOldIE = function isOldIE() {\r\n  var memo;\r\n  return func
 
 /***/ }),
 
+/***/ "./core/Model.js":
+/*!***********************!*\
+  !*** ./core/Model.js ***!
+  \***********************/
+/*! namespace exports */
+/*! export Model [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Model\": () => /* binding */ Model\n/* harmony export */ });\n/* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ \"./core/Slider.js\");\n\r\n\r\nclass Model extends _Slider__WEBPACK_IMPORTED_MODULE_0__.Slider {\r\n  constructor() {\r\n    super()\r\n    this.sliderWidth = 500\r\n    this.sliderStart = 0\r\n    this.sliderEnd = 100\r\n    this.currentPercent = 0\r\n  }\r\n  subscribe() {\r\n    this.emitter.subscribe('2', text => console.log(text))\r\n  }\r\n} \r\n\r\n\n\n//# sourceURL=webpack:///./core/Model.js?");
+
+/***/ }),
+
+/***/ "./core/Observer.js":
+/*!**************************!*\
+  !*** ./core/Observer.js ***!
+  \**************************/
+/*! namespace exports */
+/*! export Observer [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Observer\": () => /* binding */ Observer\n/* harmony export */ });\nclass Observer {\r\n  constructor() {\r\n    this.listeners = {}\r\n  }\r\n\r\n  trigger(event, ...args) {\r\n    if (!Array.isArray(this.listeners[event])) {\r\n      return false\r\n    } \r\n    this.listeners[event].forEach(listener => {\r\n      listener(...args)\r\n    })\r\n    return true\r\n  }\r\n\r\n  subscribe(event, fn) {\r\n    this.listeners[event] = this.listeners[event] || []\r\n    this.listeners[event].push(fn)\r\n  }\r\n}\n\n//# sourceURL=webpack:///./core/Observer.js?");
+
+/***/ }),
+
+/***/ "./core/Presenter.js":
+/*!***************************!*\
+  !*** ./core/Presenter.js ***!
+  \***************************/
+/*! namespace exports */
+/*! export Presenter [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Presenter\": () => /* binding */ Presenter\n/* harmony export */ });\n/* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ \"./core/Slider.js\");\n\r\n\r\nclass Presenter extends _Slider__WEBPACK_IMPORTED_MODULE_0__.Slider {\r\n}\r\n\n\n//# sourceURL=webpack:///./core/Presenter.js?");
+
+/***/ }),
+
+/***/ "./core/Slider.js":
+/*!************************!*\
+  !*** ./core/Slider.js ***!
+  \************************/
+/*! namespace exports */
+/*! export Slider [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Slider\": () => /* binding */ Slider\n/* harmony export */ });\nclass Slider {\r\n  constructor(emitter) {\r\n    this.emitter = emitter\r\n  }\r\n}\n\n//# sourceURL=webpack:///./core/Slider.js?");
+
+/***/ }),
+
+/***/ "./core/View.js":
+/*!**********************!*\
+  !*** ./core/View.js ***!
+  \**********************/
+/*! namespace exports */
+/*! export View [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"View\": () => /* binding */ View\n/* harmony export */ });\n/* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ \"./core/Slider.js\");\n\r\n\r\nclass View extends _Slider__WEBPACK_IMPORTED_MODULE_0__.Slider {\r\n  constructor() { \r\n    super() \r\n    this.point = document.querySelector('.track__point')\r\n    this.upPoint = document.querySelector('.up-point')\r\n    this.scale = document.querySelector('.slider__scale')\r\n    this.track = document.querySelector('.track')\r\n  }\r\n\r\n  renderSlider(selector) {\r\n    let track = (document.createElement('div'))\r\n    track.className  = 'track slider__track'\r\n    document.querySelector(selector).prepend(track)\r\n    track.insertAdjacentHTML('beforeend', '<div class=\"track__select\"></div>')\r\n    track.insertAdjacentHTML('beforeend', '<div class=\"track__point\"></div>')\r\n    track.insertAdjacentHTML('beforeend', '<div class=\"up-point\">0</div>')\r\n  }\r\n  \r\n  renderScale(start, end) {\r\n    let long__numbers = null\r\n    const makeScale = index => {\r\n      // let scale = document.querySelector('.slider__scale')\r\n      this.scale.insertAdjacentHTML(\"beforeEnd\", `<div class='scale__numbers long__numbers' id=\"${index}\"></div>`)\r\n      long__numbers = document.getElementById(`${index}`)\r\n      long__numbers.insertAdjacentHTML(\"beforeend\", `<div class=\"long__numbers-number\">${index}</div>`)\r\n    }\r\n    for (let index = start; index <= end; index++) {\r\n      end > 390 ? \r\n        index % 40 == 0 ?\r\n          makeScale(index) : false\r\n      : end > 100 ?\r\n        index % 20 == 0 ? \r\n          makeScale(index) : false\r\n      : index % 10 == 0 ?\r\n         makeScale(index) : false \r\n    }\r\n  }\r\n  \r\n  destroyScale() {\r\n    document.querySelectorAll('.scale__numbers').forEach(e => {\r\n      e.remove()\r\n    })\r\n  }\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./core/View.js?");
+
+/***/ }),
+
 /***/ "./index.js":
 /*!******************!*\
   !*** ./index.js ***!
@@ -73,7 +143,7 @@ eval("\r\n\r\nvar isOldIE = function isOldIE() {\r\n  var memo;\r\n  return func
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/style.sass */ \"./styles/style.sass\");\n// https://jinv.ru/range/\r\n\r\n\r\n\r\nconst point = document.querySelector('.track__point')\r\nconst upPoint = document.querySelector('.up-point')\r\nconst scale = document.querySelector('.slider__scale')\r\nconst track = document.querySelector('.track')\r\n\r\n\r\n\r\nlet position = 0\r\nlet currentPosition = 0\r\nlet currentWidth = null\r\nlet persentSelect  = null\r\nlet percent = 0\r\nlet currentPercent = 0\r\n\r\n\r\n\r\n// Мин и макс\r\nlet sliderStart = 0\r\nlet sliderEnd = 100\r\nlet sliderWidth = 500\r\n\r\nconst inputMin = document.querySelector('.input__min')\r\nconst inputMax = document.querySelector('.input__max')\r\nconst inputCurrent = document.querySelector('.input__current')\r\n\r\ninputMin.value = sliderStart\r\ninputMax.value = sliderEnd\r\ninputCurrent.value = 0\r\n\r\ninputMin.addEventListener('change', () => {\r\n  sliderStart = inputMin.value\r\n  destroy()\r\n  init(sliderStart, sliderEnd)\r\n  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n})\r\n\r\ninputMax.addEventListener('change', ()=> {\r\n  sliderEnd = inputMax.value\r\n  destroy()\r\n  init(sliderStart, sliderEnd)\r\n  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n})\r\n\r\ninputCurrent.addEventListener('change', () => {\r\n  inputCurrent.value = inputCurrent.value > 100 ? 100 : inputCurrent.value < 0 ? 0 : inputCurrent.value\r\n  document.body.style.setProperty('--selectWidth', inputCurrent.value + '%')\r\n  upPoint.innerHTML = inputCurrent.value\r\n  percent = inputCurrent.value * 100 / sliderEnd\r\n})\r\n\r\n// Конец кнопок min и max\r\n\r\n// Генерируем шкалу в зависимости от мин и макс\r\nlet long__numbers = null\r\n\r\nfunction init(start, end) {\r\n  for (let index = start; index <= end; index++) {\r\n    if (index % 10 == 0) {\r\n      scale.insertAdjacentHTML(\"beforeEnd\", `<div class='scale__numbers long__numbers' id=\"${index}\"></div>`)\r\n      long__numbers = document.getElementById(`${index}`)\r\n      long__numbers.insertAdjacentHTML(\"beforeend\", `<div class=\"long__numbers-number\">${index}</div>`)\r\n    } else if (index % 10 == 5){\r\n      scale.insertAdjacentHTML(\"beforeEnd\", `<div class='scale__numbers pre-long__numbers'></div>`)\r\n    } else {\r\n      scale.insertAdjacentHTML(\"beforeEnd\", `<div class='scale__numbers'></div>`)\r\n    }\r\n  }\r\n}\r\n\r\ninit(sliderStart, sliderEnd)\r\n\r\nfunction destroy() {\r\n  document.querySelectorAll('.scale__numbers').forEach(e => {\r\n    e.remove()\r\n  })\r\n}\r\n// Конец\r\n\r\n// Перемещение ползунка\r\n\r\npoint.addEventListener('mousedown', e => {\r\n  position = e.screenX\r\n  document.onmousemove = (e) => {\r\n    currentPosition = e.screenX\r\n    currentWidth = position - currentPosition\r\n    persentSelect = currentWidth / sliderWidth * -100\r\n    currentPercent = (percent + persentSelect) > 100 \r\n    ? 100 : (percent + persentSelect) < 0 \r\n    ? 0 : (percent + persentSelect) \r\n      upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n      inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n      document.body.style.setProperty('--selectWidth', currentPercent + '%')    \r\n  }\r\n  document.onmouseup = () => {\r\n    percent = currentPercent\r\n    document.onmousemove = document.onmouseup = null\r\n  }\r\n})\r\n\r\ntrack.onclick = (e) => {\r\n  position = point.getBoundingClientRect().x\r\n  currentPosition = e.screenX\r\n  currentWidth = position - currentPosition\r\n  persentSelect = currentWidth / sliderWidth * -100\r\n  currentPercent = (percent + persentSelect) > 100 \r\n  ? 100 : (percent + persentSelect) < 0 \r\n  ? 0 : (percent + persentSelect) \r\n  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n  document.body.style.setProperty('--selectWidth', currentPercent + '%')\r\n  percent = currentPercent\r\n}\r\n\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/style.sass */ \"./styles/style.sass\");\n/* harmony import */ var _core_Model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/Model */ \"./core/Model.js\");\n/* harmony import */ var _core_Observer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/Observer */ \"./core/Observer.js\");\n/* harmony import */ var _core_Presenter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/Presenter */ \"./core/Presenter.js\");\n/* harmony import */ var _core_View__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./core/View */ \"./core/View.js\");\n\r\n// https://jinv.ru/range/\r\n\r\n\r\n\r\n\r\n\r\nclass Main {\r\n  constructor(emit) {\r\n    this.view = new _core_View__WEBPACK_IMPORTED_MODULE_3__.View(emit)\r\n    this.model = new _core_Model__WEBPACK_IMPORTED_MODULE_1__.Model(emit)\r\n    this.controller = new _core_Presenter__WEBPACK_IMPORTED_MODULE_2__.Presenter(emit)\r\n  }\r\n}\r\n\r\nlet emitter = new _core_Observer__WEBPACK_IMPORTED_MODULE_4__.Observer()\r\nlet main = new Main(emitter)\r\nlet view = new _core_View__WEBPACK_IMPORTED_MODULE_3__.View(emitter)\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nlet position = 0\r\nlet currentPosition = 0\r\nlet currentWidth = null\r\nlet persentSelect  = null\r\nlet percent = 0\r\nlet currentPercent = 0\r\n\r\n\r\n\r\n// Мин и макс\r\nlet sliderStart = 0\r\nlet sliderEnd = 200\r\nlet sliderWidth = 500\r\n\r\nconst inputMin = document.querySelector('.input__min')\r\nconst inputMax = document.querySelector('.input__max')\r\nconst inputCurrent = document.querySelector('.input__current')\r\n\r\ninputMin.value = sliderStart\r\ninputMax.value = sliderEnd\r\ninputCurrent.value = 0\r\n\r\ninputMin.addEventListener('change', () => {\r\n  sliderStart = inputMin.value\r\n  view.destroyScale()\r\n  view.renderScale(sliderStart, sliderEnd)\r\n  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n})\r\n\r\ninputMax.addEventListener('change', ()=> {\r\n  sliderEnd = inputMax.value\r\n  view.destroyScale()\r\n  view.renderScale(sliderStart, sliderEnd)\r\n  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n})\r\n\r\ninputCurrent.addEventListener('change', () => {\r\n  inputCurrent.value = inputCurrent.value > 100 ? 100 : inputCurrent.value < 0 ? 0 : inputCurrent.value\r\n  document.body.style.setProperty('--selectWidth', inputCurrent.value + '%')\r\n  upPoint.innerHTML = inputCurrent.value\r\n  percent = inputCurrent.value * 100 / sliderEnd\r\n})\r\n\r\n// Конец кнопок min и max\r\n\r\n// Генерируем шкалу в зависимости от мин и макс\r\n\r\n// создание слайдера\r\n\r\nview.renderSlider('.slider')\r\nview.renderScale(sliderStart, sliderEnd)\r\n\r\nconst point = document.querySelector('.track__point')\r\nconst upPoint = document.querySelector('.up-point')\r\nconst scale = document.querySelector('.slider__scale')\r\nconst track = document.querySelector('.track')\r\n\r\n\r\n\r\n\r\n// Конец\r\n\r\n// Перемещение ползунка\r\n\r\npoint.addEventListener('mousedown', e => {\r\n  position = e.screenX\r\n  document.onmousemove = (e) => {\r\n    currentPosition = e.screenX\r\n    currentWidth = position - currentPosition\r\n    persentSelect = currentWidth / sliderWidth * -100\r\n    currentPercent = (percent + persentSelect) > 100 \r\n    ? 100 : (percent + persentSelect) < 0 \r\n    ? 0 : (percent + persentSelect) \r\n      upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n      inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n      document.body.style.setProperty('--selectWidth', currentPercent + '%')    \r\n  }\r\n  document.onmouseup = () => {\r\n    percent = currentPercent\r\n    document.onmousemove = document.onmouseup = null\r\n  }\r\n})\r\n\r\ntrack.onclick = (e) => {\r\n  position = point.getBoundingClientRect().x\r\n  currentPosition = e.screenX\r\n  currentWidth = position - currentPosition\r\n  persentSelect = currentWidth / sliderWidth * -100\r\n  currentPercent = (percent + persentSelect) > 100 \r\n  ? 100 : (percent + persentSelect) < 0 \r\n  ? 0 : (percent + persentSelect) \r\n  upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)\r\n  inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)\r\n  document.body.style.setProperty('--selectWidth', currentPercent + '%')\r\n  percent = currentPercent\r\n}\r\n\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ })
 
