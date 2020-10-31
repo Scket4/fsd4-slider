@@ -3,14 +3,21 @@ import { SliderComponent } from "../core/SliderComponents";
 export class Point extends SliderComponent {
   static className = 'track__point'
   constructor(emitter, $root) {
-    super(emitter, $root)
+    super(emitter, $root, {
+      name: 'Point',
+      listeners: ['click', 'mousemove', 'mousedown']
+    })
   }
   
   toHTML() {
     return ''
   }
 
-  sub() {
-    this.emitter.subscribe('2', () => console.log('ok'))
+  onClick(event) {
+    console.log(event);
+  }
+
+  onMousemove(event) {
+    console.log(event);
   }
 }

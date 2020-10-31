@@ -1,13 +1,32 @@
 // import { Slider } from "./Slider";
 
 export class Model {
-  // constructor() {
-  //   super()
-  //   this.sliderWidth = 500
-  //   this.sliderStart = 0
-  //   this.sliderEnd = 100
-  //   this.currentPercent = 0
+  constructor(emmiter) {
+    this.emmiter = emmiter
+    this.sliderWidth = 500
+    this.sliderStart = 0
+    this.sliderEnd = 100
+    this.currentPercent = 0
   }
+
+  sliderStartChange(val) {
+    if (val === 'undefined') {
+      return this.sliderStart
+    } else {
+      this.sliderStart = val
+      console.log(this.sliderStart);
+    }
+  }
+
+  sliderEndChange(val) {
+    if (val === 'undefined') {
+      return this.sliderEnd
+    } else {
+      this.sliderEnd = val
+    }
+  }
+
+}
 
   // sliderWidthChange(val) {
   //   if(val === 'undefined') {
