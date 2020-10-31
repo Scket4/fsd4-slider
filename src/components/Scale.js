@@ -7,7 +7,7 @@ export class Scale extends SliderComponent {
     super(emitter, $root)
   }
 
-  renderScale(start = 0, end = 150) {
+  renderScale(start = 0, end = 100) {
     const $scale__numbers = $.create('div', 'scale__numbers')
     const makeScale = index => {
       const $scaleNum = $.create('div', ('scale__number', 'long__numbers'), index)

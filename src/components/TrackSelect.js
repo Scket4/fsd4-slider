@@ -9,4 +9,9 @@ export class TrackSelect extends SliderComponent {
   toHTML() {
     return ''
   }
+
+  init() {
+    super.init()
+    this.emitter.subscribe('pointToComponents: mousemove', pos => this.$root.width(pos))
+  }
 }

@@ -13,8 +13,7 @@ body
   display: flex
   justify-content: center
   align-items: center
-  --selectWidth: 0%
-  --selectLeft: 0px
+  flex-direction: column
 
 .main
   width: 80%
@@ -36,16 +35,17 @@ body
   justify-content: center
   align-items: center
   position: relative
-  &__container
-    display: flex
-    justify-content: center
-    align-items: center
-    width: auto
   &__scale
     width: $track-width
     height: 20px
     margin-top: 10px
     border-top: 1px solid rgba(0, 0, 0, .4)
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none    
     
 
 .scale__numbers 
@@ -73,13 +73,20 @@ body
     background: $green
     position: absolute
     z-index: 2
-    left: calc(var(--selectWidth) - 2.5%)
+    left: -10px
     top: -10px
     cursor: pointer
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none   
   &__select
     position: absolute
-    width: var(--selectWidth)
-    height: 100%
+    width: 0%
+    height: 7px
+    top: 0
     left: 0
     border-radius: 10px
     background: $green
@@ -90,7 +97,7 @@ body
   height: 30px
   border-radius: 5px
   position: absolute
-  left: calc(var(--selectWidth) - 2.5%)
+  left: -10px
   top: -45px   
   background: $green
   color: white
@@ -137,3 +144,17 @@ body
         color: rgba(0, 0, 0, .4)
       &:focus
         outline: 1px solid rgba(0, 0, 0, .2)
+
+
+.main-1,
+.main-2,
+.main-3,
+.main-4
+  width: 80%
+  height: 500px
+  background: white
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  margin-top: 200px

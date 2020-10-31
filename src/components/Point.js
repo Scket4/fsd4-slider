@@ -5,19 +5,41 @@ export class Point extends SliderComponent {
   constructor(emitter, $root) {
     super(emitter, $root, {
       name: 'Point',
-      listeners: ['click', 'mousemove', 'mousedown']
+      listeners: ['mousedown', 'mouseup']
     })
+    this.percent = 0
   }
   
   toHTML() {
     return ''
   }
 
-  onClick(event) {
-    console.log(event);
+  init() {
+    super.init()
+    console.log(this.point = this);
   }
 
-  onMousemove(event) {
-    console.log(event);
+  onMousedown(e) {
+    const position = e.screenX
+
+    document.onmousemove = e => {
+      let currentPosition = e.screenX
+      let selectWidth = currentPosition - position
+      let selectPercent = selectWidth / 500 * 100 + this.percent
+      selectPercent = selectPercent > 100 ? 100 : selectPercent < 0 ? 0 : selectPercent
+
+      this.$root.left(selectPercent)
+      this.emitter.trigger('pointToComponents: mousemove', selectPercent)
+
+      document.onmouseup = () => {
+        this.emitter.trigger('pointToView: mouseup', selectPercent)
+        document.onmousemove = null
+        this.percent = selectPercent
+      }
+    }     
+  }
+
+  onMouseup() {
+    document.onmousemove = null
   }
 }

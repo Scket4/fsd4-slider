@@ -16,15 +16,17 @@ export class View {
       $el.html(component.toHTML())
       $root.append($el)
       $el.$el.className === 'up-point' ? $el.$el.innerHTML = 0 : ''
+      console.log(component);
       return component
     })
     return $root
     
   }
 
-  render() {
+  init() {
     this.$el.append(this.getRoot())
     this.components.forEach(comp => comp.init())
+    this.emitter.subscribe('VIEW', () => {})
   }
 
 

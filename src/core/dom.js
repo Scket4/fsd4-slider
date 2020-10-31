@@ -6,7 +6,7 @@ class Dom {
   }
 
   html(html) {
-    if (typeof html === 'string') {
+    if (typeof html === 'string' || typeof html === 'number')  {
       this.$el.innerHTML = html
       return this
     } 
@@ -37,6 +37,15 @@ class Dom {
   remove() {
     this.$el.remove()
   } 
+
+  left(val) {
+    this.$el.style.left = val - 2.5 + '%'
+  }
+
+  width(val) {
+    this.$el.style.width = val + '%'
+  }
+
 }
 
 export function $(selector) {

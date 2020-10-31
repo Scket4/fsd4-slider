@@ -7,6 +7,12 @@ export class Model {
     this.sliderStart = 0
     this.sliderEnd = 100
     this.currentPercent = 0
+    this.isVertical = false
+    this.isRange = false
+  }
+
+  init() {
+    this.emmiter.subscribe('MODEL', () => {})
   }
 
   sliderStartChange(val) {

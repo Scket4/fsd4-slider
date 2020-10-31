@@ -10,6 +10,16 @@ let slider = new Slider('.main')
 
 slider.render()
 
+// let i = 1
+
+// document.onclick = () => {
+//   const div = document.createElement('div')
+//   div.className =  `main-${i}`
+//   document.body.append(div)
+//   let slider2 = new Slider(`.main-${i}`)
+//   slider2.render()
+//   i++
+// }
 
 
 

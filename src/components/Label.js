@@ -10,6 +10,12 @@ export class Label extends SliderComponent{
     this.emitter.subscribe('1', () => console.log('lol'))
   }
 
+  init() {
+    super.init()
+    this.emitter.subscribe('pointToComponents: mousemove', pos => this.$root.left(pos))
+    this.emitter.subscribe('pointToComponents: mousemove', pos => this.$root.html(Math.floor(pos)))
+  }
+
   toHTML() {
     return ''
   }
