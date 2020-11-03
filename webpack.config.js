@@ -32,7 +32,11 @@ module.exports = {
             plugins: ['@babel/plugin-proposal-class-properties']
           }
         }
-      } 
+      },
+      {
+      test: /\.ttf$/,
+      use: ['file-loader']
+      }
     ] 
   },
   devServer: {

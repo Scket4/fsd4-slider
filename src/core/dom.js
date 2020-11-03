@@ -38,15 +38,57 @@ class Dom {
     this.$el.remove()
   } 
 
+  addClass(selector) {
+    this.$el.classList.add(selector)
+  }
+
+  removeClass(selector) {
+    this.$el.classList.remove(selector)
+  }
+
+  getWidth() {
+    return this.$el.getBoundingClientRect().right - this.$el.getBoundingClientRect().left
+  }
+
+  getCoordsX() {
+    return this.$el.getBoundingClientRect().x
+  }
+
   left(val) {
-    this.$el.style.left = val - 2.5 + '%'
+    this.$el.style.left = val - 1.2 + '%'
   }
 
   width(val) {
     this.$el.style.width = val + '%'
   }
 
+  find(selector) {
+    return this.$el.querySelector(selector)
+  }
+
+  data() {
+    return this.$el.dataset
+  }
+
+  toggle(selector) {
+    this.$el.classList.toggle(selector)
+  }
+
+  getValue() {
+    return this.$el.value
+  }
+
+  hasSelector(selector) {
+    return this.$el.classList.contains(selector)
+  }
+
 }
+
+
+
+
+
+
 
 export function $(selector) {
   return new Dom(selector)

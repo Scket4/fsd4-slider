@@ -2,8 +2,8 @@ import { SliderComponent } from "../core/SliderComponents";
 
 export class TrackSelect extends SliderComponent {
   static className = 'track__select'
-  constructor(emitter, $root) {
-    super(emitter, $root)
+  constructor(emitter, $root, values) {
+    super(emitter, $root, {}, values)
   }
 
   toHTML() {
@@ -12,6 +12,9 @@ export class TrackSelect extends SliderComponent {
 
   init() {
     super.init()
-    this.emitter.subscribe('pointToComponents: mousemove', pos => this.$root.width(pos))
+  }
+
+  makeChange() {
+    this.$root.width(this.prop.percent)
   }
 }

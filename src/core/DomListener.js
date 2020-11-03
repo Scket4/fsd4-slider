@@ -13,7 +13,6 @@ export class DomListener {
   initDOMListeners() {
     this.listeners.forEach(list => {
       const method = capitalize(list)
-      // console.log(this);
       this[method] = this[method].bind(this)
       this.$root.on(list, this[method])
     })

@@ -3,9 +3,36 @@ import { SliderComponent } from "../core/SliderComponents";
 
 export class Scale extends SliderComponent {
   static className = 'slider__scale'
-  constructor(emitter, $root) {
-    super(emitter, $root)
+  constructor(emitter, $root, values) {
+    super(emitter, $root, {
+      name: 'scale',
+      listeners: ['click']
+    }, values)
   }
+
+  init() {
+    super.init()
+  }
+
+  makeChange() {
+    this.$root.html(this.toHTML())
+    if (!this.prop.isScale) {
+      this.$root.addClass('hiden')
+    } else {
+      this.$root.removeClass('hiden')
+    }
+  }
+
+  onClick(e) {
+    const currentPosition = e.screenX
+    const width = currentPosition - this.prop.pointPosition
+    let selected = width / this.prop.sliderWidth * 100 + this.prop.percent
+    selected = selected > 100 ? 100 : selected < 0 ? 0 : selected
+    this.prop.pointPosition = currentPosition
+
+    this.emitter.trigger('viewToPresenter', {percent: selected})
+  }
+
 
   renderScale(start = 0, end = 100) {
     const $scale__numbers = $.create('div', 'scale__numbers')
@@ -27,8 +54,7 @@ export class Scale extends SliderComponent {
   }
   
   toHTML() {
-    // console.log(this.$root);
-    const renderScale = this.renderScale().outerHTML.trim()
+    const renderScale = this.renderScale(this.prop.sliderStart, this.prop.sliderEnd).outerHTML.trim()
     return `${renderScale}`
   }
 }

@@ -1,25 +1,14 @@
 import './styles/style.sass'
 // https://jinv.ru/range/
-import { Model } from './core/Model';
-import { Observer } from './core/Observer';
-import { Presenter } from './core/Presenter';
-import { View } from './core/View';
 import { Slider } from './core/Slider';
 
 let slider = new Slider('.main')
 
 slider.render()
 
-// let i = 1
+let slider2 = new Slider('.main-2')
 
-// document.onclick = () => {
-//   const div = document.createElement('div')
-//   div.className =  `main-${i}`
-//   document.body.append(div)
-//   let slider2 = new Slider(`.main-${i}`)
-//   slider2.render()
-//   i++
-// }
+slider2.render()
 
 
 
@@ -29,52 +18,6 @@ slider.render()
 
 
 
-
-
-
-
-
-
-// class Main {
-//   constructor(emit) {
-//     this.view = new View(emit)
-//     this.model = new Model(emit)
-//     this.controller = new Presenter(emit)
-//   }
-// }
-
-// let emitter = new Observer()
-// let main = new Main(emitter)
-// let view = new View(emitter)
-
-
-
-
-
-
-
-
-// let position = 0
-// let currentPosition = 0
-// let currentWidth = null
-// let persentSelect  = null
-// let percent = 0
-// let currentPercent = 0
-
-
-
-// // Мин и макс
-// let sliderStart = 0
-// let sliderEnd = 200
-// let sliderWidth = 500
-
-// const inputMin = document.querySelector('.input__min')
-// const inputMax = document.querySelector('.input__max')
-// const inputCurrent = document.querySelector('.input__current')
-
-// inputMin.value = sliderStart
-// inputMax.value = sliderEnd
-// inputCurrent.value = 0
 
 // inputMin.addEventListener('change', () => {
 //   sliderStart = inputMin.value
@@ -101,58 +44,4 @@ slider.render()
 
 // // Конец кнопок min и max
 
-// // Генерируем шкалу в зависимости от мин и макс
 
-// // создание слайдера
-
-// view.renderSlider('.slider')
-// view.renderScale(sliderStart, sliderEnd)
-
-// const point = document.querySelector('.track__point')
-// const upPoint = document.querySelector('.up-point')
-// const scale = document.querySelector('.slider__scale')
-// const track = document.querySelector('.track')
-
-
-
-
-// // Конец
-
-// // Перемещение ползунка
-
-// point.addEventListener('mousedown', e => {
-//   view.positionChange = e.screenX
-//   // position = e.screenX
-//   document.onmousemove = e => {
-//     view.pointMove()
-//     // currentPosition = e.screenX
-//     // currentWidth = position - currentPosition
-//     // persentSelect = currentWidth / sliderWidth * -100
-//     // currentPercent = (percent + persentSelect) > 100 
-//     // ? 100 : (percent + persentSelect) < 0 
-//     // ? 0 : (percent + persentSelect) 
-//       upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
-//       inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
-//       document.body.style.setProperty('--selectWidth', currentPercent + '%')    
-//   }
-//   document.onmouseup = () => {
-//     percent = currentPercent
-//     document.onmousemove = document.onmouseup = null
-//   }
-// })
-
-
-
-// track.onclick = (e) => {
-//   position = point.getBoundingClientRect().x
-//   currentPosition = e.screenX
-//   currentWidth = position - currentPosition
-//   persentSelect = currentWidth / sliderWidth * -100
-//   currentPercent = (percent + persentSelect) > 100 
-//   ? 100 : (percent + persentSelect) < 0 
-//   ? 0 : (percent + persentSelect) 
-//   upPoint.innerHTML = Math.floor(currentPercent / 100 * sliderEnd)
-//   inputCurrent.value = Math.floor(currentPercent / 100 * sliderEnd)
-//   document.body.style.setProperty('--selectWidth', currentPercent + '%')
-//   percent = currentPercent
-// }

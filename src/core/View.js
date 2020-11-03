@@ -1,10 +1,12 @@
 import { $ } from "./dom"
+import { Properties } from "./Properties"
 
 export class View {
   constructor(emitter, components = [], selector) { 
     this.emitter = emitter
     this.$el = $(selector)
     this.components = components
+    this.prop = new Properties()
   }
 
   getRoot() {
@@ -12,11 +14,10 @@ export class View {
 
     this.components = this.components.map(Comp => {
       const $el = $.create('div', Comp.className)
-      const component = new Comp(this.emitter, $el)
+      const component = new Comp(this.emitter, $el, this.prop)
       $el.html(component.toHTML())
       $root.append($el)
       $el.$el.className === 'up-point' ? $el.$el.innerHTML = 0 : ''
-      console.log(component);
       return component
     })
     return $root
@@ -25,10 +26,33 @@ export class View {
 
   init() {
     this.$el.append(this.getRoot())
-    this.components.forEach(comp => comp.init())
-    this.emitter.subscribe('VIEW', () => {})
+    this.emitter.subscribe('elToView', (width, coords, position) => this.setProperties(width, coords, position))
+    this.components.forEach(comp => {comp.init()
+    console.log(comp);})
   }
 
+  makeChange(prop, val) {
+    this.components.forEach(comp => {
+      if (comp.setProperties) {
+        comp.setProperties(prop, val)
+      }
+    })
+    
+    this.components.forEach(comp => {
+      if (comp.makeChange) {
+      comp.makeChange(prop, val)
+      }
+    })
+  }
+ 
+
+  pointMove(val) {
+    this.components.forEach(comp => {
+      if (comp.pointMove) {
+        comp.pointMove(val)
+      }
+    })
+  }
 
   
   // destroyScale() {

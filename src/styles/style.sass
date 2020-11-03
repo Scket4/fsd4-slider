@@ -1,6 +1,8 @@
-$track-width: 500px
-$grey: #c6c6c6  
-$green: #42B06C
+@import 'fonts.css'
+  
+$track-width: 100%
+$grey: #cecece
+$green: #4d5994
 // $select-width: 50%
 
 *
@@ -9,11 +11,12 @@ $green: #42B06C
   box-sizing: border-box
 
 body 
-  background-color: #026DA0  
+  background-color: #060042
   display: flex
   justify-content: center
   align-items: center
   flex-direction: column
+  font-family: 'Montserrat', sans-serif
 
 .main
   width: 80%
@@ -23,11 +26,13 @@ body
   flex-direction: column
   justify-content: center
   align-items: center
-  margin-top: 200px
+  margin-top: 50px
+  border-radius: 15px
+  padding: 0 30px
 
 .slider
   margin: 0 auto
-  width: auto
+  width: 100%
   height: auto
   background-color: #fff
   display: flex
@@ -38,8 +43,9 @@ body
   &__scale
     width: $track-width
     height: 20px
-    margin-top: 10px
-    border-top: 1px solid rgba(0, 0, 0, .4)
+    margin-top: 20px
+    cursor: pointer
+    border-top: 1px solid #bfbfbf
     -webkit-touch-callout: none
     -webkit-user-select: none
     -khtml-user-select: none
@@ -54,11 +60,11 @@ body
   justify-content: space-between
   align-items: flex-start
   font-size: 12px
-  color: rgba(0, 0, 0, .4)
+  color: #bfbfbf
 
 .track
   width: $track-width
-  height: 7px  
+  height: 2px  
   background: $grey
   border-radius: 10px
   position: relative
@@ -67,14 +73,14 @@ body
   -moz-user-select: none
   -ms-user-select: none
   &__point
-    width: 23px
-    height: 23px
+    width: 25px
+    height: 25px
     border-radius: 50%
     background: $green
     position: absolute
     z-index: 2
-    left: -10px
-    top: -10px
+    left: -1.2%
+    top: -12px
     cursor: pointer
     -webkit-touch-callout: none
     -webkit-user-select: none
@@ -85,33 +91,35 @@ body
   &__select
     position: absolute
     width: 0%
-    height: 7px
+    height: 2px
     top: 0
     left: 0
     border-radius: 10px
     background: $green
     z-index: 1 
+    pointer-events: none
 
 .up-point
   width: 25px
   height: 30px
-  border-radius: 5px
+  border-radius: 10px
   position: absolute
-  left: -10px
-  top: -45px   
+  left: -1.2%
+  top: -50px   
   background: $green
   color: white
   display: flex
   justify-content: center
   align-items: center
   cursor: auto
+  font-size: 11px
 
 
 .long__numbers
-  background-color: black
+  background-color: #bfbfbf
   position: relative
   height: 25px
-  width: 1px
+  width: 0.15rem
   &-number
     position: absolute
     left: -2px
@@ -124,26 +132,30 @@ body
   width: $track-width
   margin: 0 auto
   height: 200px
-  background: black
-  margin-top: 50px
+  margin-top: 100px
   display: flex
+  border: 1px solid #4d5994
+  padding: 8px
   flex-direction: column
+  border-radius: 4px
   &__min-max
     background: white
     height: 33%
     display: flex
     justify-content: space-around
     align-items: center
+    border: 1px solid #4d5994
+    border-radius: 4px
     & input
-      border: 1px solid rgba(0, 0, 0, .4)
+      border: 3px solid rgb(77 89 148)
       width: 50px
       padding: 2px
-      color: rgba(0, 0, 0, .5)
+      color: #4d5994
       border-radius: 5px
-      &::placeholder
-        color: rgba(0, 0, 0, .4)
+      margin-left: 20px
+      text-align: center
       &:focus
-        outline: 1px solid rgba(0, 0, 0, .2)
+        outline: none
 
 
 .main-1,
@@ -157,4 +169,72 @@ body
   flex-direction: column
   justify-content: center
   align-items: center
-  margin-top: 200px
+  margin-top: 50px
+  border-radius: 15px
+  padding: 0 30px
+
+label
+  display: flex
+  min-width: 132px
+  align-items: center
+
+.stick 
+  width: 10px
+  height: 1px
+  background-color: #bfbfbf
+  margin-left: 15px
+  display: none
+
+.input__current-max
+  display: none
+
+.settings__2
+  width: 100%
+  height: 37%
+  border: 1px solid #4d5994
+  margin-top: 70px
+  border-radius: 4px
+  display: flex
+  align-items: center
+  justify-content: space-around
+
+.checkbox
+  width: 15px
+  height: 15px
+  border: 2px solid #bfbfbf
+  border-radius: 3px
+  margin-left: 10px
+  cursor: pointer
+  position: relative
+  &::after,
+  &::before
+    position: absolute
+    content: ''
+    width: 15px
+    height: 2px
+    top: 0px
+    left: 0px
+    background: #ea5036
+    display: none
+    border-radius: 5px
+  &::after
+    transform: rotate(55deg)
+    left: -5.5px
+  &::before
+    left: 3px
+    width: 12px
+    transform: rotate(-55deg)
+    
+  &__active
+    border-color: #4d5994
+    &::after,
+    &::before
+      display: block
+
+
+.settings__2-div
+  display: flex
+  align-items:  center
+
+.hiden 
+  display: none
