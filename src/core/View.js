@@ -28,7 +28,7 @@ export class View {
     this.$el.append(this.getRoot())
     this.emitter.subscribe('elToView', (width, coords, position) => this.setProperties(width, coords, position))
     this.components.forEach(comp => {comp.init()
-    console.log(comp);})
+    })
   }
 
   makeChange(prop, val) {
