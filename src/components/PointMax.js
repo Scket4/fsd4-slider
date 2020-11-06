@@ -1,54 +1,49 @@
 import { SliderComponent } from "../core/SliderComponents"
 
 export class PointMax extends SliderComponent {
-  static className = 'range__point'
+  static className = 'point-max'
   constructor(emitter, $root, values) {
     super(emitter, $root, {
       name: 'RangePoint',
-      // listeners: ['mousedown', 'mouseup']
+      listeners: ['mousedown', 'mouseup']
     }, values)
     this.percent = 0
   }
 
   init() {
     super.init()
-    this.prop.rangeEndPosition = this.prop.rangeEndPositionLabel  =this.$root.getCoordsX() + 12.5
+    this.prop.pointMaxX = this.$root.$el.getBoundingClientRect().x + 12.5
   }
 
-  // makeChange() {
-  //   if (this.prop.isRange) {
-  //     this.$root.addClass('visible')
-  //   } else {
-  //     this.$root.removeClass('visible')
-  //   }
-  //   this.$root.left(this.prop.rangeEndPercent)
-  // }
+  makeChange(prop, val) {
+    if (prop === 'isRange') val == 1 ? this.$root.addClass('visible') : this.$root.removeClass('visible')
+    if (this.prop.isRange == 1) {
+      this.$root.left(this.prop.positionMax * this.prop.slider.width)
+      this.prop.pointMaxX = this.$root.$el.getBoundingClientRect().x + 12.5
+    }
+  }
 
-  // onMousedown(e) {
-  //   const shift = e.screenX - this.prop.rangeEndPosition
-  //   this.percent = this.prop.rangeEndPercent
-  //   let mousedown = true
+  onMousedown(e) {
+    const shift = e.clientX - this.prop.pointMaxX
 
-  //   document.onmousemove = e => {
-  //     let currentPosition = e.screenX
-  //     let selectWidth = currentPosition - this.prop.rangeEndPosition - shift
-  //     let selectPercent = selectWidth / this.prop.sliderWidth * 100 + this.percent
-  //     selectPercent = selectPercent > 100 ? 100 : selectPercent < 0 ? 0 : selectPercent
-  //     selectPercent = selectPercent <= (this.prop.percent +1) ? this.prop.percent + 1 : selectPercent
+    document.onmousemove = e => {
+      let left = e.clientX - this.prop.slider.x - shift
 
-  //     this.emitter.trigger('viewToPresenter', {rangeEndPercent: selectPercent})
-  //     this.prop.rangeEndPositionLabel = currentPosition
+      const onePercent = this.prop.slider.width / 100
 
-  //     document.onmouseup = () => {
-  //       if (mousedown) {
-  //       this.percent = selectPercent
-  //       this.prop.rangeEndPosition = currentPosition
-  //       document.onmousemove = null
-  //       mousedown = false
-  //       }
-  //     }
-  //   }
-  // }
+      left = left > this.prop.slider.width  // Больше Макс или меньше поинта мин?
+      ? this.prop.slider.width : left <= (this.prop.positionMin * this.prop.slider.width) + onePercent
+      ? (this.prop.positionMin * this.prop.slider.width) + onePercent : left
+
+
+      this.emitter.trigger('viewToPresenter', {positionMax: left / this.prop.slider.width})
+
+      document.onmouseup = () => {
+        document.onMousedown = null
+        document.onmousemove = null
+        }
+      }
+  }
 
   onMouseup() {
     document.onmousemove = null

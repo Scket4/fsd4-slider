@@ -15,26 +15,28 @@ export class Settings extends SliderComponent {
 
   init() {
     super.init()
-    this.inputMin = this.$root.find('.input__min')
-    this.inputMax = this.$root.find('.input__max')
-    this.current = this.$root.find('.input__current')
-    this.rangeMax = this.$root.find('.input__current-max')
-    this.stick = this.$root.find('.stick')
+    this.inputMin = $('.input__min')
+    this.inputMax = $('.input__max')
+    this.current = $('.input__current')
+    this.currentMax = $('.input__current-max')
+    this.stick = $('.stick')
   }
 
-  makeChange() {
-    this.current.value = Math.floor((this.prop.positionMin * this.prop.sliderSize) + this.prop.sliderStart)
+  makeChange(prop, val) {
+    this.current.$el.value = Math.floor((this.prop.positionMin * this.prop.sliderSize) + this.prop.sliderStart)
+    if (prop === 'isRange') val == 1 ? this.currentMax.addClass('visible') : this.currentMax.removeClass('visible')
+    if (prop === 'isRange') val == 1 ? this.stick.addClass('visible') : this.stick.removeClass('visible')
+    if (this.prop.isRange == 1) this.currentMax.$el.value = Math.floor((this.prop.positionMax * this.prop.sliderSize) + this.prop.sliderStart)
   }
 
   onClick(e) {
-    // const $target = $(e.target)
-    // if ($target.data('checkbox')) {
-    //   console.log('ok');
-    //   $target.toggle('checkbox__active')
-    //   const type = $target.data('checkbox')
-    //   const is = $target.hasSelector('checkbox__active')
-    //   this.emitter.trigger('viewToPresenter', {[type]: is})
-    // }
+    const $target = $(e.target)
+    if ($target.data('checkbox')) {
+      $target.toggle('checkbox__active')
+      const type = $target.data('checkbox')
+      const is = $target.hasSelector('checkbox__active')
+      this.emitter.trigger('viewToPresenter', {[type]: is})
+    }
   }
 
   onChange(e) {

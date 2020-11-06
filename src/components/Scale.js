@@ -14,13 +14,9 @@ export class Scale extends SliderComponent {
     super.init()
   }
 
-  makeChange() {
-    this.$root.html(this.toHTML())
-    if (!this.prop.isScale) {
-      this.$root.addClass('hiden')
-    } else {
-      this.$root.removeClass('hiden')
-    }
+  makeChange(prop, val) {
+    if (prop === 'sliderStart' || prop === 'sliderEnd') this.$root.html(this.toHTML())
+    if (prop === 'isScale') val == 1 ? this.$root.removeClass('hidden') : this.$root.addClass('hidden')
   }
 
   onClick(e) {

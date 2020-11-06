@@ -1,7 +1,7 @@
 import { SliderComponent } from "../core/SliderComponents";
 
 export class PointMin extends SliderComponent {
-  static className = 'track__point'
+  static className = 'point-min'
   constructor(emitter, $root, values) {
     super(emitter, $root, {
       name: 'Point',
@@ -20,9 +20,10 @@ export class PointMin extends SliderComponent {
     if (prop === 'sliderStart' || prop === 'sliderEnd')  this.prop.sliderSize = this.prop.sliderEnd - this.prop.sliderStart
   }
 
-  makeChange() {
-    this.$root.left(this.prop.positionMin * this.prop.slider.width)
+  makeChange(prop, val) {
+    this.$root.left(this.prop.positionMin * this.prop.slider.width) 
     this.prop.pointMinX = this.$root.$el.getBoundingClientRect().x + 12.5
+
   }
 
   onMousedown(e) {
@@ -31,6 +32,10 @@ export class PointMin extends SliderComponent {
     document.onmousemove = e => {
       let left = e.clientX - this.prop.slider.x - shift
       left = left > this.prop.slider.width ? this.prop.slider.width : left < 0 ? 0 : left
+
+      const onePercent = this.prop.slider.width / 100
+      if (this.prop.isRange == 1) left = left >= (this.prop.positionMax * this.prop.slider.width) - onePercent // Проверка если больше чем pointMax
+      ? (this.prop.positionMax * this.prop.slider.width) - onePercent : left
 
       this.emitter.trigger('viewToPresenter', {positionMin: left / this.prop.slider.width})
 

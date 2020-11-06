@@ -3,7 +3,6 @@
 $track-width: 100%
 $grey: #cecece
 $green: #4d5994
-// $select-width: 50%
 
 *
   padding: 0
@@ -52,15 +51,13 @@ body
     -moz-user-select: none
     -ms-user-select: none
     user-select: none    
-    
-
-.scale__numbers 
-  width: 100%
-  display: flex
-  justify-content: space-between
-  align-items: flex-start
-  font-size: 12px
-  color: #bfbfbf
+    & .scale__numbers 
+      width: 100%
+      display: flex
+      justify-content: space-between
+      align-items: flex-start
+      font-size: 12px
+      color: #bfbfbf
 
 .track
   width: $track-width
@@ -72,34 +69,19 @@ body
   -webkit-user-select: none
   -moz-user-select: none
   -ms-user-select: none
-  &__point
-    width: 25px
-    height: 25px
-    border-radius: 50%
-    background: $green
-    position: absolute
-    z-index: 2
-    left: -12.5px
-    top: -12px
-    cursor: pointer
-    -webkit-touch-callout: none
-    -webkit-user-select: none
-    -khtml-user-select: none
-    -moz-user-select: none
-    -ms-user-select: none
-    user-select: none   
-  &__select
-    position: absolute
-    width: 0%
-    height: 2px
-    top: 0
-    left: 0
-    border-radius: 10px
-    background: $green
-    z-index: 1 
-    pointer-events: none
+  
+.progress-bar
+  position: absolute
+  width: 0%
+  height: 2px
+  top: 0
+  left: 0
+  border-radius: 10px
+  background: $green
+  z-index: 1 
+  pointer-events: none
 
-.up-point
+.label-min
   width: 25px
   height: 30px
   border-radius: 10px
@@ -114,6 +96,58 @@ body
   cursor: auto
   font-size: 11px
 
+.label-max
+  width: 25px
+  height: 30px
+  border-radius: 10px
+  position: absolute
+  left: 18.8%
+  top: -50px   
+  background: $green
+  color: white
+  display: flex
+  justify-content: center
+  align-items: center
+  cursor: auto
+  font-size: 11px
+  display: none 
+
+
+.point-min
+  width: 25px
+  height: 25px
+  border-radius: 50%
+  background: $green
+  position: absolute
+  z-index: 2
+  left: -12.5px
+  top: -12px
+  cursor: pointer
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none   
+
+
+.point-max
+  width: 25px
+  height: 25px
+  border-radius: 50%
+  background: $green
+  position: absolute
+  z-index: 2
+  left: 0px
+  top: -12px
+  cursor: pointer
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none   
+  display: none
 
 .long__numbers
   background-color: #bfbfbf
@@ -122,11 +156,8 @@ body
   width: 0.15rem
   &-number
     position: absolute
-    left: -2px
+    left: -4px
     top: 28px
-
-.pre-long__numbers
-  height: 15px
 
 .settings 
   width: $track-width
@@ -142,6 +173,7 @@ body
     background: white
     height: 33%
     display: flex
+    flex-wrap: wrap
     justify-content: space-around
     align-items: center
     border: 1px solid #4d5994
@@ -183,6 +215,8 @@ label
   height: 1px
   background-color: #bfbfbf
   margin-left: 15px
+  transition: all ease .1s
+
   display: none
 
 .input__current-max
@@ -191,6 +225,7 @@ label
 .settings__2
   width: 100%
   height: 37%
+  flex-wrap: wrap
   border: 1px solid #4d5994
   margin-top: 70px
   border-radius: 4px
@@ -239,40 +274,8 @@ label
 .visible
   display: flex !important
 
-.hiden 
-  display: none
-
-.range__point
-  width: 25px
-  height: 25px
-  border-radius: 50%
-  background: #4d5994
-  position: absolute
-  z-index: 2
-  left: 18.8%
-  top: -12px
-  cursor: pointer
-  -webkit-touch-callout: none
-  -webkit-user-select: none
-  -khtml-user-select: none
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
+.hidden 
   display: none
 
 
-.range-label
-  width: 25px
-  height: 30px
-  border-radius: 10px
-  position: absolute
-  left: 18.8%
-  top: -50px   
-  background: $green
-  color: white
-  display: flex
-  justify-content: center
-  align-items: center
-  cursor: auto
-  font-size: 11px
-  display: none
+

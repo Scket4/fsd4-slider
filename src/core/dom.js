@@ -59,7 +59,7 @@ class Dom {
   }
 
   width(val) {
-    this.$el.style.width = val + '%'
+    this.$el.style.width = val + 'px'
   }
 
   find(selector) {

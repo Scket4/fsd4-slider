@@ -19,6 +19,7 @@ export class Model {
 
 
     this.positionMin = 0
+    this.positionMax = 0
   }
 
   init() {
