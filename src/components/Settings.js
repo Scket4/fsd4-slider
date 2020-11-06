@@ -18,38 +18,40 @@ export class Settings extends SliderComponent {
     this.inputMin = this.$root.find('.input__min')
     this.inputMax = this.$root.find('.input__max')
     this.current = this.$root.find('.input__current')
+    this.rangeMax = this.$root.find('.input__current-max')
+    this.stick = this.$root.find('.stick')
   }
 
   makeChange() {
-    this.current.value = Math.floor(this.prop.percent / 100 * this.prop.sliderEnd)
+    this.current.value = Math.floor((this.prop.positionMin * this.prop.sliderSize) + this.prop.sliderStart)
   }
 
   onClick(e) {
-    const $target = $(e.target)
-    if ($target.data().checkbox) {
-      $target.toggle('checkbox__active')
-      const type = $target.data().checkbox
-      const is = $target.hasSelector('checkbox__active')
-      this.emitter.trigger('viewToPresenter', {[type]: is})
-    }
+    // const $target = $(e.target)
+    // if ($target.data('checkbox')) {
+    //   console.log('ok');
+    //   $target.toggle('checkbox__active')
+    //   const type = $target.data('checkbox')
+    //   const is = $target.hasSelector('checkbox__active')
+    //   this.emitter.trigger('viewToPresenter', {[type]: is})
+    // }
   }
 
   onChange(e) {
     const $target = $(e.target)
+    const type = $target.data('type')
 
-    if ($target.data().type === 'input__max') {
-      const val = $target.getValue()
-      this.emitter.trigger('viewToPresenter', {sliderEnd: val})
+    if (type === 'input__max') {
+      this.emitter.trigger('viewToPresenter', {sliderEnd: $target.getValue()})
 
-    } else if ($target.data().type === 'input__min') {
-      const val = $target.getValue()
-      this.emitter.trigger('viewToPresenter', {sliderStart: val})
+    } else if (type === 'input__min') {
+      this.emitter.trigger('viewToPresenter', {sliderStart: $target.getValue()})
 
-    } else if ($target.data().type === 'input_current') {
+    } else if (type === 'input_current') {
       let val = $target.getValue()
-      val = val > this.prop.sliderEnd ? this.prop.sliderEnd : val < this.prop.sliderStart ? this.prop.sliderStart : val
-      console.log(this.prop.sliderEnd);
-      this.emitter.trigger('viewToPresenter', {percent: val})
+      val = val / this.prop.sliderEnd
+      val = val > 1 ? 1 : val < 0 ? 0 : val
+      this.emitter.trigger('viewToPresenter', {positionMin: val})
     }
   }
 
@@ -65,7 +67,7 @@ export class Settings extends SliderComponent {
           <label><p>Значение:</p>
           <input type="text" class="input__current" value="0" data-type="input_current">
           <span class="stick"></span>
-          <input type="text" class="input__current-max">
+          <input type="text" class="input__current-max" value="20">
           </label>
         </div>
         <div class="settings__2">
