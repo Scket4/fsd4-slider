@@ -21,6 +21,7 @@ export class Track extends SliderComponent {
 
   onClick(e) {
     let left = e.clientX - this.prop.slider.x 
+    e.preventDefault()
 
     this.emitter.trigger('viewToPresenter', {positionMin: left / this.prop.slider.width})
   }

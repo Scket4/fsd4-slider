@@ -48,6 +48,7 @@ export class PointMin extends SliderComponent {
   }
 
   onMousedown(e) {
+    console.log(e);
     const shift = e.clientX - this.prop.pointMinX
 
     document.onmousemove = e => {
