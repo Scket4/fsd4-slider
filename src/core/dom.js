@@ -55,7 +55,7 @@ class Dom {
   }
 
   left(val) {
-    this.$el.style.left = val - 1.2 + '%'
+    this.$el.style.left = val - 12.5 + 'px'
   }
 
   width(val) {
@@ -66,8 +66,8 @@ class Dom {
     return this.$el.querySelector(selector)
   }
 
-  data() {
-    return this.$el.dataset
+  data(type) {
+    return this.$el.dataset[type]
   }
 
   toggle(selector) {

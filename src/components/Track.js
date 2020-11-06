@@ -11,8 +11,7 @@ export class Track extends SliderComponent {
   
   init() {
     super.init()
-    this.prop.sliderCoords = this.$root.getCoordsX()
-    this.prop.sliderWidth = this.$root.getWidth()
+    this.prop.slider = this.$root.$el.getBoundingClientRect()
   }
   
   toHTML() {
@@ -21,13 +20,9 @@ export class Track extends SliderComponent {
 
 
   onClick(e) {
-    const currentPosition = e.screenX
-    const width = currentPosition - this.prop.pointPosition
-    let selected = width / this.prop.sliderWidth * 100 + this.prop.percent
-    selected = selected > 100 ? 100 : selected < 0 ? 0 : selected
-    this.prop.pointPosition = currentPosition
+    let left = e.clientX - this.prop.slider.x 
 
-    this.emitter.trigger('viewToPresenter', {percent: selected})
+    this.emitter.trigger('viewToPresenter', {positionMin: left / this.prop.slider.width})
   }
 
 }

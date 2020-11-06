@@ -1,16 +1,18 @@
-import { Label } from "../components/Label"
+import { LabelMin } from "../components/LabelMin"
 import { Track } from "../components/Track"
-import { TrackSelect } from "../components/TrackSelect"
 import { Scale } from "../components/Scale"
-import { Point } from "../components/Point"
+import { PointMin } from "../components/PointMin"
 import { Settings } from "../components/Settings"
 import { Model } from "./Model";
 import { View } from "./View"
+import { PointMax } from "../components/PointMax"
+import { LabelMax } from "../components/LabelMax"
+import { ProgressBar } from "../components/ProgressBar"
 
 export class Presenter {
   constructor(emmiter, selector) {
     this.emitter = emmiter
-    this.view = new View(this.emitter, [Track, Scale, Point, Label, TrackSelect, Settings], selector)
+    this.view = new View(this.emitter, [Track, Scale, PointMin, PointMax, LabelMin, LabelMax, ProgressBar, Settings], selector)
     this.model = new Model(this.emitter)
   }
 
