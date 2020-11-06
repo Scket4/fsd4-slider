@@ -28,10 +28,10 @@ export class PointMin extends SliderComponent {
 
   onTouchstart(e) {
     const shift = e.changedTouches[0].clientX - this.prop.pointMinX
+    e.preventDefault()
 
     document.ontouchmove = e => {
       let left = e.changedTouches[0].clientX - this.prop.slider.x - shift
-      console.log(this.prop.slider);
       left = left > this.prop.slider.width ? this.prop.slider.width : left < 0 ? 0 : left
 
       const onePercent = this.prop.slider.width / 100
