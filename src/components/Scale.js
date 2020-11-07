@@ -37,11 +37,12 @@ export class Scale extends SliderComponent {
       $scale__numbers.append($scaleNum)
     }
     for (let index = start; index <= end; index++) {
-      end > 390 ? 
-        index % 40 == 0 ? makeScale(index) : false
-    : end >= 100 ?
-        index % 20 === 0 || index % 10 == 0 ? makeScale(index) : false
-    : index % 10 == 0 ? makeScale(index) : false 
+      if (end >= 2000) {index % 160 == 0 ? makeScale(index) : false}
+      else if (end >= 1000) {index % 80 == 0 ? makeScale(index) : false}
+      else if (end >= 600) {index % 40 == 0 ? makeScale(index) : false} 
+      else if (end >= 360) {index % 20 == 0 ? makeScale(index) : false} 
+      else if (end >= 150) {index % 10 == 0 ? makeScale(index) : false} 
+      else {index % 5 == 0 ? makeScale(index) : false}
     }
     return $scale__numbers.$el
   }

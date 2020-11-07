@@ -1,15 +1,10 @@
 export class Model {
   constructor(emmiter) {
     this.emmiter = emmiter
-    this.sliderStart = 0
-    this.sliderEnd = 100
-    this.percent = 0
-    this.value = 0
+
+    this.stepSize = 0
+
     this.isVertical = false
-    
-    this.rangeStart = 0
-    this.rangeEnd = 0
-    this.stepsize = 1
     this.isLabel = true
     this.isScale = true
 

@@ -43,17 +43,21 @@ export class Settings extends SliderComponent {
     const $target = $(e.target)
     const type = $target.data('type')
 
-    if (type === 'input__max') {
-      this.emitter.trigger('viewToPresenter', {sliderEnd: $target.getValue()})
+    if (type === 'input__max') this.emitter.trigger('viewToPresenter', {sliderEnd: $target.getValue()})
 
-    } else if (type === 'input__min') {
-      this.emitter.trigger('viewToPresenter', {sliderStart: $target.getValue()})
+    if (type === 'input__min') this.emitter.trigger('viewToPresenter', {sliderStart: $target.getValue()})
 
-    } else if (type === 'input_current') {
+    if (type === 'input_current') {
       let val = $target.getValue()
       val = val / this.prop.sliderEnd
       val = val > 1 ? 1 : val < 0 ? 0 : val
       this.emitter.trigger('viewToPresenter', {positionMin: val})
+    }
+
+    if (type === 'input__step') {
+      let val = Math.ceil($target.getValue())
+      $target.$el.value = val
+      this.emitter.trigger('viewToPresenter', {step: val})
     }
   }
 
@@ -65,6 +69,9 @@ export class Settings extends SliderComponent {
           </label>
           <label><p>Макс:</p>
           <input type="text" class="input__max" value="100" data-type='input__max'>
+          </label>
+          <label><p>Шаг:</p>
+          <input type="text" class="input__step" value="0" data-type='input__step'>
           </label>
           <label><p>Значение:</p>
           <input type="text" class="input__current" value="0" data-type="input_current">
