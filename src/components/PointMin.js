@@ -5,7 +5,7 @@ export class PointMin extends SliderComponent {
   constructor(emitter, $root, values) {
     super(emitter, $root, {
       name: 'Point',
-      listeners: ['mousedown', 'touchstart']
+      listeners: ['mousedown']
     }, values)
   }
 
