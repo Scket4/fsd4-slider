@@ -6,6 +6,7 @@ export class View {
     this.emitter = emitter
     this.$el = $(selector)
     this.components = components
+    // this.verticalComponents = [Track, Scale, PointMin, PointMax, LabelMin, LabelMax, ProgressBar, Settings]
     this.prop = new Properties()
   }
 
@@ -17,7 +18,6 @@ export class View {
       const component = new Comp(this.emitter, $el, this.prop)
       $el.html(component.toHTML())
       $root.append($el)
-      $el.$el.className === 'up-point' ? $el.$el.innerHTML = 0 : ''
       return component
     })
     return $root
@@ -26,7 +26,6 @@ export class View {
 
   init() {
     this.$el.append(this.getRoot())
-    this.emitter.subscribe('elToView', (width, coords, position) => this.setProperties(width, coords, position))
     this.components.forEach(comp => {comp.init()
     })
   }
@@ -43,22 +42,17 @@ export class View {
       comp.makeChange(prop, val)
       }
     })
+
+    if (prop === 'isVertical') {
+      if (val == 1) {
+        const $root = $('.slider')
+        $root.addClass('sliderV')
+        this.components.forEach(comp => {
+          comp.initVertical()
+        })
+      }
+    }
   }
  
-
-  pointMove(val) {
-    this.components.forEach(comp => {
-      if (comp.pointMove) {
-        comp.pointMove(val)
-      }
-    })
-  }
-
-  
-  // destroyScale() {
-  //   document.querySelectorAll('.scale__numbers').forEach(e => {
-  //     e.remove()
-  //   })
-  // }
 }
 

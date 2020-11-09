@@ -9,15 +9,20 @@ export class Track extends SliderComponent {
     }, values)
   }
   
+  initVertical() {
+    super.initVertical()
+    this.$root.addClass('trackV') 
+    this.prop.slider = this.$root.$el.getBoundingClientRect()
+  }
+
+  makeChange(prop) {
+    
+  }
+
   init() {
     super.init()
     this.prop.slider = this.$root.$el.getBoundingClientRect()
   }
-  
-  toHTML() {
-    return '' 
-  }
-
 
   onClick(e) {
     let left = e.clientX - this.prop.slider.x 

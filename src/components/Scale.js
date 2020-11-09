@@ -10,8 +10,10 @@ export class Scale extends SliderComponent {
     }, values)
   }
 
-  init() {
-    super.init()
+  initVertical() {
+    super.initVertical()
+    this.$root.addClass('scaleV')
+    this.$root.html(this.toHTML())
   }
 
   makeChange(prop, val) {
@@ -27,11 +29,11 @@ export class Scale extends SliderComponent {
   }
 
 
-  renderScale(start = 0, end = 100) {
-    const $scale__numbers = $.create('div', 'scale__numbers')
+  renderScale(start, end) {
+    const $scale__numbers = this.prop.isVertical ? $.create('div', `scale__numbersV`) : $.create('div', `scale__numbers`)
     const makeScale = index => {
-      const $scaleNum = $.create('div', ('scale__number', 'long__numbers'), index)
-      const $scaleNumLong = $.create('div', "long__numbers-number")
+      const $scaleNum = this.prop.isVertical ? $.create('div', 'long__numbersV', index) : $.create('div', 'long__numbers', index)
+      const $scaleNumLong = this.prop.isVertical ? $.create('div', "long__numbers-numberV") : $.create('div', "long__numbers-number")
       $scaleNumLong.$el.innerHTML = index
       $scaleNum.append($scaleNumLong)
       $scale__numbers.append($scaleNum)

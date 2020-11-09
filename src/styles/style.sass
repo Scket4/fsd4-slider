@@ -51,13 +51,14 @@ body
     -moz-user-select: none
     -ms-user-select: none
     user-select: none    
-    & .scale__numbers 
-      width: 100%
-      display: flex
-      justify-content: space-between
-      align-items: flex-start
-      font-size: 12px
-      color: #bfbfbf
+
+.scale__numbers 
+  width: 100%
+  display: flex
+  justify-content: space-between
+  align-items: flex-start
+  font-size: 12px
+  color: #bfbfbf
 
 .track
   width: $track-width
@@ -70,7 +71,8 @@ body
   -moz-user-select: none
   -ms-user-select: none
   
-.progress-bar
+.progress-bar,
+.progress-barV
   position: absolute
   width: 0%
   height: 2px
@@ -81,7 +83,8 @@ body
   z-index: 1 
   pointer-events: none
 
-.label-min
+.label-min,
+.label-minV
   width: 25px
   height: 30px
   border-radius: 10px
@@ -96,7 +99,8 @@ body
   cursor: auto
   font-size: 11px
 
-.label-max
+.label-max,
+.label-maxV
   width: 25px
   height: 30px
   border-radius: 10px
@@ -113,7 +117,8 @@ body
   display: none 
 
 
-.point-min
+.point-min,
+.point-minV
   width: 25px
   height: 25px
   border-radius: 50%
@@ -131,7 +136,8 @@ body
   user-select: none   
 
 
-.point-max
+.point-max,
+.point-maxV
   width: 25px
   height: 25px
   border-radius: 50%
@@ -159,7 +165,8 @@ body
     left: -4px
     top: 28px
 
-.settings 
+.settings,
+.settingsV
   width: $track-width
   margin: 0 auto
   height: 200px
@@ -284,3 +291,70 @@ label
     height: 66%
   .settings__2 
     margin-top: 20px
+
+
+
+
+
+
+
+
+.sliderV
+  flex-direction: row
+  justify-content: space-around
+  height: 80%
+  width: 60%
+
+.trackV
+  height: 100%
+  width: 2px
+  background: $grey
+  border-radius: 10px
+  position: relative
+  cursor: pointer
+
+.scaleV 
+  width: 20px
+  height: 100%
+  position: relative
+  border-left: 1px solid #bfbfbf
+  
+
+.scale__numbersV
+  height: 100%
+  flex-direction: column
+  width: 100%
+  display: flex
+  justify-content: space-between
+  align-items: flex-start
+  font-size: 12px
+  color: #bfbfbf
+
+.long__numbersV
+  height: 0.1rem
+  width: 25px
+  background-color: #bfbfbf
+  position: relative
+
+.long__numbers-numberV
+  top: -5px
+  position: absolute
+  left: 33px
+
+.settings__min-maxV
+  background: white
+  height: 200px
+  width: 100%
+
+.settingsV
+  width: 50%
+
+.progress-barV
+  width: 3px
+
+.label-minV,
+.label-maxV
+  left: -45px !important
+
+.point-maxV
+  left: -12.5px  

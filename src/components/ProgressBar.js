@@ -6,8 +6,9 @@ export class ProgressBar extends SliderComponent {
     super(emitter, $root, {}, values)
   }
 
-  toHTML() {
-    return ''
+  initVertical() {
+    super.initVertical()
+    this.$root.addClass('progress-barV')
   }
 
   init() {

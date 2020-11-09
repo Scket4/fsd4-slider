@@ -17,4 +17,8 @@ export class Observer {
     this.listeners[event] = this.listeners[event] || []
     this.listeners[event].push(fn)
   }
+
+  cleanSubscribers() {
+    this.listeners = {}
+  }
 }

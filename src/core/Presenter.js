@@ -1,12 +1,12 @@
-import { LabelMin } from "../components/LabelMin"
+import { LabelMin } from "../components/label/LabelMin"
 import { Track } from "../components/Track"
 import { Scale } from "../components/Scale"
-import { PointMin } from "../components/PointMin"
+import { PointMin } from "../components/point/PointMin"
 import { Settings } from "../components/Settings"
 import { Model } from "./Model";
 import { View } from "./View"
-import { PointMax } from "../components/PointMax"
-import { LabelMax } from "../components/LabelMax"
+import { PointMax } from "../components/point/PointMax"
+import { LabelMax } from "../components/label/LabelMax"
 import { ProgressBar } from "../components/ProgressBar"
 
 export class Presenter {
@@ -20,7 +20,12 @@ export class Presenter {
     this.view.init()
     this.model.init()
     this.emitter.subscribe('modelToPresenter', (prop, val) => this.presenterToView(prop, val))
+    this.emitter.subscribe('isVertical: true', () => this.init())
     this.emitter.subscribe('viewToPresenter', obj => this.viewToPresenter(obj)) 
+  }
+
+  ok() {
+    console.log('okok');
   }
 
   viewToPresenter(obj) {

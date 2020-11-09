@@ -16,6 +16,9 @@ class Dom {
   on(eventType, fn) {
     this.$el.addEventListener(eventType, fn)
   }
+  off(eventType, fn) {
+    this.$el.removeEventListener(eventType, fn)
+  }
 
   clear() {
     this.$el.html('')
@@ -60,6 +63,14 @@ class Dom {
 
   width(val) {
     this.$el.style.width = val + 'px'
+  }
+
+  height(val) {
+    this.$el.sty.height = val + 'px'
+  }
+
+  top(val) {
+    this.$el.style.top = val - 12.5 + 'px'
   }
 
   find(selector) {

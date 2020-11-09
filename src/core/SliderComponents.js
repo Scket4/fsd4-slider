@@ -13,4 +13,9 @@ export class SliderComponent extends DomListener {
   init() {
     this.initDOMListeners()
   }
+
+  initVertical() {
+    const classNmae = this.$root.$el.classList
+    this.$root.$el.classNmae = ''
+  }
 }

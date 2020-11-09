@@ -15,6 +15,9 @@ export class Model {
 
     this.positionMin = 0
     this.positionMax = 0
+
+    this.positionMinV = 0
+    this.positionMaxV = 1
   }
 
   init() {

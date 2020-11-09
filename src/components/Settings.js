@@ -13,6 +13,12 @@ export class Settings extends SliderComponent {
     this.current = null
   }
 
+  initVertical() {
+    super.initVertical()
+    this.$root.addClass('settingsV')
+    this.$root.html(this.toHTML())
+  }
+
   init() {
     super.init()
     this.inputMin = $('.input__min')
@@ -63,7 +69,7 @@ export class Settings extends SliderComponent {
 
   toHTML() {
     return `
-        <div class="settings__min-max">
+        <div class="settings__min-max ${this.prop.isVertical ? 'settings__min-maxV' : ''}">
           <label><p>Мин:</p>
           <input type="text" data-type="input__min" class="input__min" value="0" >
           </label>
@@ -80,7 +86,7 @@ export class Settings extends SliderComponent {
           </label>
         </div>
         <div class="settings__2">
-        <div class='settings__2-div'> <p>Вертикально:</p> <div class="is-vertical checkbox" data-checkbox="isVertical"></div> </div>
+        <div class='settings__2-div'> <p>Вертикально:</p> <div class="is-vertical checkbox ${this.prop.isVertical ? 'checkbox__active' : ''}" data-checkbox="isVertical"></div> </div>
         <div class='settings__2-div'> <p>Лейбел:</p> <div class="is-label checkbox checkbox__active" data-checkbox="isLabel"></div> </div>
         <div class='settings__2-div'> <p>Шкала:</p> <div class="is-scale checkbox checkbox__active" data-checkbox="isScale"></div> </div>
         <div class='settings__2-div'> <p>Диапазон</p> <div class="is-range checkbox" data-checkbox="isRange"></div> </div>
