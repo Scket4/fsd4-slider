@@ -40,7 +40,9 @@ module.exports = {
     ] 
   },
   devServer: {
-    port: 4444
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
   },
   resolve: {
     extensions: ['.js', '.ts', '.sass'],

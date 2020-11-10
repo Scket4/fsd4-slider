@@ -125,8 +125,8 @@ export class Settings extends SliderComponent {
         </div>
         <div class="settings__2">
         <div class='settings__2-div'> <p>Вертикально:</p> <div class="is-vertical checkbox ${this.prop.isVertical ? 'checkbox__active' : ''}" data-checkbox="isVertical"></div> </div>
-        <div class='settings__2-div'> <p>Лейбел:</p> <div class="is-label checkbox ${this.prop.isLabel ? 'checkbox__active' : ''}" data-checkbox="isLabel"></div> </div>
-        <div class='settings__2-div'> <p>Шкала:</p> <div class="is-scale checkbox ${this.prop.isScale ? 'checkbox__active' : ''}" data-checkbox="isScale"></div> </div>
+        <div class='settings__2-div'> <p>Лейбел:</p> <div class="is-label checkbox checkbox__active" data-checkbox="isLabel"></div> </div>
+        <div class='settings__2-div'> <p>Шкала:</p> <div class="is-scale checkbox checkbox__active" data-checkbox="isScale"></div> </div>
         <div class='settings__2-div'> <p>Диапазон</p> <div class="is-range checkbox" data-checkbox="isRange"></div> </div>
         </div>
     `
