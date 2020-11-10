@@ -15,7 +15,12 @@ export class SliderComponent extends DomListener {
   }
 
   initVertical() {
-    const classNmae = this.$root.$el.classList
-    this.$root.$el.classNmae = ''
+    this.$root.$el.className = ''
+    this.$root.$el.style = ''
+  }
+
+  initHorizontal() {
+    this.$root.$el.className = ''
+    this.$root.$el.style = ''
   }
 }

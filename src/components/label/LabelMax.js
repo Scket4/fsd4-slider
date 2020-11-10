@@ -11,9 +11,15 @@ export class LabelMax extends SliderComponent{
     this.$root.html(this.prop.rangeEndPercent)
   }
 
+  initHorizontal() {
+    super.initHorizontal()
+    this.$root.addClass('label-max')
+  }
+
   initVertical() {
     super.initVertical()
     this.$root.addClass('label-maxV')
+    this.$root.removeClass('visible')
   }
 
   makeChange(prop, val) {
@@ -23,7 +29,10 @@ export class LabelMax extends SliderComponent{
     this.$root.html(Math.floor((v ? this.prop.positionMaxV : this.prop.positionMax) * this.prop.sliderSize)
       + this.prop.sliderStart)
 
-    v ? this.$root.top(this.prop.positionMaxV * this.prop.slider.height - 2)
-    : this.$root.left(this.prop.positionMax * this.prop.slider.width)
+      if (v) { 
+        this.$root.top(this.prop.positionMaxV * this.prop.slider.height - 2)
+      } else {
+        this.$root.left(this.prop.positionMax * this.prop.slider.width)
+      }
   }
 }

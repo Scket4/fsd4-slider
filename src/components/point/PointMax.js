@@ -15,10 +15,15 @@ export class PointMax extends SliderComponent {
     this.prop.pointMaxX = this.$root.$el.getBoundingClientRect().x + 12.5
   }
 
+  initHorizontal() {
+    super.initHorizontal()
+    this.$root.addClass('point-max')
+  }
+
   initVertical() {
     super.initVertical()
     this.$root.addClass('point-maxV')
-    this.prop.pointMaxY = this.$root.$el.getBoundingClientRect().y + 12.5
+    this.$root.removeClass('visible')
   }
 
   makeChange(prop, val) {
@@ -26,19 +31,19 @@ export class PointMax extends SliderComponent {
     if (this.prop.isRange == 1) {
       this.prop.isVertical ? this.$root.top(this.prop.positionMaxV * this.prop.slider.height) : this.$root.left(this.prop.positionMax * this.prop.slider.width)
     }
-    this.prop.pointMaxX = this.$root.$el.getBoundingClientRect().x + 12.5
-    this.prop.pointMaxY = this.$root.$el.getBoundingClientRect().y + 12.5
 
   }
 
   
   onMousedown(e) {
+    this.prop.pointMaxX = this.$root.$el.getBoundingClientRect().x + 12.5
+    this.prop.pointMaxY = this.$root.$el.getBoundingClientRect().y + 12.5
     const v = this.prop.isVertical
     const client = v ? 'clientY' : 'clientX'
     const sliderXY = v ? this.prop.slider.y : this.prop.slider.x
     const pointMaxXY = v ? this.prop.pointMaxY : this.prop.pointMaxX
     const sliderWH = v ? this.prop.slider.height : this.prop.slider.width
-    const positionMinXY = v ? this.prop.positionMinY : this.prop.positionMinX
+    const positionMin = v ? this.prop.positionMinV : this.prop.positionMin
     const position = v ? 'positionMaxV' : 'positionMax'
 
     const shift = e[client] - pointMaxXY
@@ -47,8 +52,8 @@ export class PointMax extends SliderComponent {
       val = val > sliderWH ? sliderWH : val < 0 ? 0 : val
 
       const onePercent = sliderWH / 100
-      if (this.prop.isRange == 1) val = val >= (positionMinXY * sliderWH) - onePercent // Проверка если больше чем pointMax
-      ? (positionMinXY * sliderWH) - onePercent : val
+      if (this.prop.isRange == 1) val = val <= (positionMin * sliderWH) + onePercent // Проверка если больше чем pointMax
+      ? (positionMin * sliderWH) + onePercent : val
 
       val = this.prop.step == 0 ?  val : Math.round(val / this.prop.stepSize) * this.prop.stepSize
 

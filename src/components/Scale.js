@@ -10,6 +10,12 @@ export class Scale extends SliderComponent {
     }, values)
   }
 
+  initHorizontal() {
+    super.initHorizontal()
+    this.$root.addClass('slider__scale')
+    this.$root.html(this.toHTML())
+  }
+
   initVertical() {
     super.initVertical()
     this.$root.addClass('scaleV')
@@ -22,10 +28,17 @@ export class Scale extends SliderComponent {
   }
 
   onClick(e) {
-    let left = e.clientX - this.prop.slider.x 
+    let val = 0
     e.preventDefault()
+    const pos = this.prop.isVertical ? 'positionMinV' : 'positionMin'
+    const sliderWH = this.prop.isVertical ? this.prop.slider.height : this.prop.slider.width
+    if (this.prop.isVertical) {
+      val = e.clientY - this.prop.slider.y
+    } else { 
+      val = e.clientX - this.prop.slider.x 
+    }
 
-    this.emitter.trigger('viewToPresenter', {positionMin: left / this.prop.slider.width})
+    this.emitter.trigger('viewToPresenter', {[pos]: val / sliderWH})
   }
 
 

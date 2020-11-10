@@ -66,7 +66,7 @@ class Dom {
   }
 
   height(val) {
-    this.$el.sty.height = val + 'px'
+    this.$el.style.height = val + 'px'
   }
 
   top(val) {

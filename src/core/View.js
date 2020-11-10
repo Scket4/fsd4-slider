@@ -6,7 +6,6 @@ export class View {
     this.emitter = emitter
     this.$el = $(selector)
     this.components = components
-    // this.verticalComponents = [Track, Scale, PointMin, PointMax, LabelMin, LabelMax, ProgressBar, Settings]
     this.prop = new Properties()
   }
 
@@ -52,6 +51,15 @@ export class View {
         })
       }
     }
+
+    if (prop === 'isVertical') {
+      if (val == 0) {
+        const $root = $('.slider')
+        $root.removeClass('sliderV')
+        this.components.forEach(comp => comp.initHorizontal())
+      }
+    }
+
   }
  
 }

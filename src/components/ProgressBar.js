@@ -9,6 +9,14 @@ export class ProgressBar extends SliderComponent {
   initVertical() {
     super.initVertical()
     this.$root.addClass('progress-barV')
+    this.$root.width(0)
+  }
+
+  initHorizontal() {
+    super.initHorizontal()
+    this.$root.addClass('progress-bar')
+    this.$root.left(12.5)
+    this.$root.width(0)
   }
 
   init() {
@@ -20,12 +28,30 @@ export class ProgressBar extends SliderComponent {
   }
 
   makeChange() {
+    const v = this.prop.isVertical
     if (this.prop.isRange == 1 ) {
-      this.$root.left(this.prop.positionMin * this.prop.slider.width)
-      this.$root.width((this.prop.positionMax * this.prop.slider.width) - (this.prop.positionMin * this.prop.slider.width))
-    } else {
-      this.$root.left(12.5)
-      this.$root.width(this.prop.positionMin * this.prop.slider.width)
+      if (v) {
+        this.$root.top(this.prop.positionMinV * this.prop.slider.height)  
+        this.$root.height((this.prop.positionMaxV * this.prop.slider.height) - (this.prop.positionMinV * this.prop.slider.height))
+        this.$root.width(3)
+        this.$root.left(12.5)
+      } else {
+        this.$root.left(this.prop.positionMin * this.prop.slider.width)
+        this.$root.width((this.prop.positionMax * this.prop.slider.width) - (this.prop.positionMin * this.prop.slider.width))
+        this.$root.height(3) 
+      }
+    } 
+    if (this.prop.isRange == 0) {
+      if (v) {
+        console.log('ok');
+        this.$root.height(this.prop.positionMinV * this.prop.slider.height)
+        this.$root.top(12)
+        this.$root.width(3)
+        this.$root.left(12.5)
+      } else { 
+        this.$root.width(this.prop.positionMin * this.prop.slider.width)
+        this.$root.height(3)
+      }
       
     }
   }
