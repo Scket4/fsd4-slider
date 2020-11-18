@@ -3,7 +3,7 @@ import { SliderComponent } from "../core/SliderComponents";
 export class ProgressBar extends SliderComponent {
   static className = 'progress-bar'
   constructor(emitter, $root, values) {
-    super(emitter, $root, {}, values)
+    super(emitter, $root, values)
   }
 
   initVertical() {

@@ -1,33 +1,36 @@
-import { capitalize } from "./utils"
+// import { capitalize } from "./utils"
 
 
 export class DomListener {
-  constructor($root, listeners = []) {
+  constructor($root) {
     if (!$root) {
       throw new Error(`no ${$root}`)
     }
     this.$root = $root
-    this.listeners = listeners
   }
 
-  initDOMListeners() {
-    this.listeners.forEach(list => {
-      const method = capitalize(list)
-      this[method] = this[method].bind(this)
-      this.$root.on(list, this[method])
-    })
+  on(eventName, eventHandler) {
+    this.$root.on(eventName, eventHandler)
   }
 
-  removeDOMListeners() {
-    this.listeners.forEach(listener => {
-      const method = getMethodName(listener)
-      this.$root.off(listener, this[method])
-    })
-  }
+//   initDOMListeners() {
+//     this.listeners.forEach(list => {
+//       const method = capitalize(list)
+//       this[method] = this[method].bind(this)
+//       this.$root.on(list, this[method])
+//     })
+//   }
+
+//   removeDOMListeners() {
+//     this.listeners.forEach(listener => {
+//       const method = getMethodName(listener)
+//       this.$root.off(listener, this[method])
+//     })
+//   }
 }
 
-// input => onInput
-function getMethodName(eventName) {
-  return 'on' + capitalize(eventName)
-}
+// // input => onInput
+// function getMethodName(eventName) {
+//   return 'on' + capitalize(eventName)
+// }
 

@@ -4,13 +4,18 @@ import { SliderComponent } from "../core/SliderComponents";
 export class Settings extends SliderComponent {
   static className = 'settings'
   constructor(emitter, $root, values) {
-    super(emitter, $root, {
-      name: 'settings',
-      listeners: ['click', 'change']
-    }, values)
-    this.inputMin = null
-    this.inputMax = null
-    this.current = null
+    super(emitter, $root, values)
+    this.domListener.on('click', (e) => this.onClick(e))
+    this.domListener.on('change', (e) => this.onChange(e))
+  }
+
+  getData(props) {
+    props.isScale = true
+    props.isLabel = true
+    props.isVertical = false
+    props.isRange = false
+    props.step = 0
+    props.stepSize = 0
   }
 
   initVertical() {
@@ -35,7 +40,6 @@ export class Settings extends SliderComponent {
   }
 
   init() {
-    super.init()
     this.inputMin = $('.input__min')
     this.inputMax = $('.input__max')
     this.current = $('.input__current')

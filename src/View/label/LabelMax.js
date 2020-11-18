@@ -3,7 +3,7 @@ import { SliderComponent } from "../../core/SliderComponents";
 export class LabelMax extends SliderComponent{
   static className = 'label-max'
   constructor(emitter, $root, values) {
-    super(emitter, $root, {}, values)
+    super(emitter, $root, values)
   }
 
   init() {

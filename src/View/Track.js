@@ -3,25 +3,25 @@ import { SliderComponent } from "../core/SliderComponents";
 export class Track extends SliderComponent {
   static className = 'track'
   constructor(emitter, $root, values) {
-    super(emitter, $root, {
-      name: 'track',
-      listeners: ['click']
-    }, values)
+    super(emitter, $root, values)
+    this.domListener.on('click', (e) => this.onClick(e))
   }
 
   initHorizontal() {
     super.initHorizontal()
     this.$root.addClass('track')
   }
-  
+
+  getData(props) {
+    props.sliderWidth = this.$root.$el.getBoundingClientRect().width
+    props.sliderHeight = this.$root.$el.getBoundingClientRect().height
+    props.sliderX = this.$root.$el.getBoundingClientRect().x
+    props.sliderY = this.$root.$el.getBoundingClientRect().x
+  }
+   
   initVertical() {
     super.initVertical()
     this.$root.addClass('trackV') 
-    this.prop.slider = this.$root.$el.getBoundingClientRect()
-  }
-
-  init() {
-    super.init()
     this.prop.slider = this.$root.$el.getBoundingClientRect()
   }
 

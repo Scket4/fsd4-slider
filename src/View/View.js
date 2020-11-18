@@ -1,12 +1,29 @@
-import { $ } from "./dom"
-import { Properties } from "./Properties"
+import { $ } from "../core/dom"
+import { Properties } from "../Properties"
+import { LabelMin } from "./label/LabelMin"
+import { Track } from "./Track"
+import { Scale } from "./Scale"
+import { PointMin } from "./point/PointMin"
+import { Settings } from "./Settings"
+import { PointMax } from "./point/PointMax"
+import { LabelMax } from "./label/LabelMax"
+import { ProgressBar } from "./ProgressBar"
 
 export class View {
-  constructor(emitter, components = [], selector) { 
+  constructor(emitter, selector) { 
     this.emitter = emitter
     this.$el = $(selector)
-    this.components = components
+    this.components = [Track, Scale, PointMin, PointMax, LabelMin, LabelMax, ProgressBar, Settings]
     this.prop = new Properties()
+  }
+
+  getData(e) {
+    let props = {}
+    this.components.forEach(comp => {
+      comp.getData(props)
+    })
+    if (e) props.event = e
+    this.emitter.trigger('viewToPresenter', props)
   }
 
   getRoot() {
@@ -27,6 +44,7 @@ export class View {
     this.$el.append(this.getRoot())
     this.components.forEach(comp => {comp.init()
     })
+    this.emitter.subscribe('componentsToView: pointMove', (e) => this.getData(e))
   }
 
   makeChange(prop, val) {

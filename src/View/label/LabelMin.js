@@ -3,7 +3,7 @@ import { SliderComponent } from "../../core/SliderComponents";
 export class LabelMin extends SliderComponent{
   static className = 'label-min'
   constructor(emitter, $root, values) {
-    super(emitter, $root, {}, values)
+    super(emitter, $root, values)
   }
 
   initVertical() {

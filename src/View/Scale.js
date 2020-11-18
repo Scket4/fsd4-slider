@@ -4,10 +4,8 @@ import { SliderComponent } from "../core/SliderComponents";
 export class Scale extends SliderComponent {
   static className = 'slider__scale'
   constructor(emitter, $root, values) {
-    super(emitter, $root, {
-      name: 'scale',
-      listeners: ['click']
-    }, values)
+    super(emitter, $root, values)
+    this.domListener.on('click', (e) => this.onClick())
   }
 
   initHorizontal() {

@@ -1,17 +1,18 @@
 import { DomListener } from "./DomListener";
 
-export class SliderComponent extends DomListener {
-  constructor(emitter, $root, options = {}, prop) {
-    super($root, options.listeners)
+export class SliderComponent {
+  constructor(emitter, $root, prop) {
     this.emitter  = emitter
     this.prop = prop
+    this.$root = $root
+    this.domListener = new DomListener($root)
     
   }
   toHTML() {
     return ''
   }
   init() {
-    this.initDOMListeners()
+    // this.initDOMListeners()
   }
 
   initVertical() {
@@ -23,4 +24,6 @@ export class SliderComponent extends DomListener {
     this.$root.$el.className = ''
     this.$root.$el.style = ''
   }
+
+  getData() {}
 }

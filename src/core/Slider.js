@@ -1,5 +1,5 @@
 import { Observer } from "./Observer"
-import { Presenter } from "./Presenter"
+import { Presenter } from "../Presenter/Presenter"
 
 export class Slider {
   constructor(selector) {
