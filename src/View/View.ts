@@ -8,7 +8,8 @@ import { PointMax } from "./point/PointMax"
 import { LabelMax } from "./label/LabelMax"
 import { ProgressBar } from "./ProgressBar"
 import { Observer } from "../core/Observer"
-import { properties } from "../core/globals"
+import { completeValue, properties, whatThumb } from "../core/globals"
+import { Compilation } from "webpack"
 
 export class View {
   emitter: Observer
@@ -24,7 +25,7 @@ export class View {
     this.$el.append(this.getRoot())
     this.components.forEach(comp => {comp.init()
     })
-    this.emitter.subscribe('componentsToView: pointMove', (e: MouseEvent) => this.getData(e))
+    // this.emitter.subscribe('pointToView', (e: MouseEvent, point: string) => this.getData())
   }
 
 
@@ -42,21 +43,24 @@ export class View {
     
   }
 
-
-  getData(e: MouseEvent) {
+  getData() {
     let props: properties = {} as properties
     this.components.forEach(comp => {
       comp.getData(props)
     })
-    if (e) props.event = e
-    this.emitter.trigger('viewToPresenter', props)
+    return props
   }
 
-  changeData(val: number) {
-    this.components.forEach((el: any) => {
-      if (el.changeData) el.changeData(val)
+  pointMinChange(values: completeValue) {
+    this.components.forEach(el => {
+      if (el.pointMinChange) el.pointMinChange(values) 
     })
   }
- 
-}
 
+  pointMaxChange(values: completeValue) {
+    this.components.forEach(el => {
+      if (el.pointMaxChange) el.pointMaxChange(values) 
+      
+    })
+  }
+}

@@ -9,24 +9,16 @@ export class Scale extends SliderComponent {
     this.domListener.on('click', (e) => this.onClick(e as MouseEvent))
   }
 
+  init() {
+    this.emitter.subscribe('settingsToScale', () => this.toggleClass())
+  }
+
+
   getData() {}
 
-  // initHorizontal() {
-  //   super.initHorizontal()
-  //   this.$root.addClass('slider__scale')
-  //   this.$root.html(this.toHTML())
-  // }
-
-  // initVertical() {
-  //   super.initVertical()
-  //   this.$root.addClass('scaleV')
-  //   this.$root.html(this.toHTML())
-  // }
-
-  // makeChange(prop, val) {
-  //   if (prop === 'sliderStart' || prop === 'sliderEnd') this.$root.html(this.toHTML())
-  //   if (prop === 'isScale') val == 1 ? this.$root.removeClass('hidden') : this.$root.addClass('hidden')
-  // }
+  toggleClass() {
+    this.$root.toggle('hidden')
+  }
 
   onClick(e: MouseEvent) {
     // let val = 0
@@ -43,28 +35,28 @@ export class Scale extends SliderComponent {
   }
 
 
-  // renderScale(start: number, end: number) {
-  //   const $scale__numbers = this.prop.isVertical ? $.create('div', `scale__numbersV`) : $.create('div', `scale__numbers`)
-  //   const makeScale = index => {
-  //     const $scaleNum = this.prop.isVertical ? $.create('div', 'long__numbersV', index) : $.create('div', 'long__numbers', index)
-  //     const $scaleNumLong = this.prop.isVertical ? $.create('div', "long__numbers-numberV") : $.create('div', "long__numbers-number")
-  //     $scaleNumLong.$el.innerHTML = index
-  //     $scaleNum.append($scaleNumLong)
-  //     $scale__numbers.append($scaleNum)
-  //   }
-  //   for (let index = start; index <= end; index++) {
-  //     if (end >= 2000) {index % 160 == 0 ? makeScale(index) : false}
-  //     else if (end >= 1000) {index % 80 == 0 ? makeScale(index) : false}
-  //     else if (end >= 600) {index % 40 == 0 ? makeScale(index) : false} 
-  //     else if (end >= 360) {index % 20 == 0 ? makeScale(index) : false} 
-  //     else if (end >= 150) {index % 10 == 0 ? makeScale(index) : false} 
-  //     else {index % 5 == 0 ? makeScale(index) : false}
-  //   }
-  //   return $scale__numbers.$el
-  // }
+  renderScale(start: number = 0, end: number = 100) {
+    const $scale__numbers = $.create('div', `scale__numbers`)
+    const makeScale = (index: number) => {
+      const $scaleNum = $.create('div', 'long__numbers', index)
+      const $scaleNumLong = $.create('div', "long__numbers-number")
+      $scaleNumLong.$el.innerHTML = index.toString()
+      $scaleNum.append($scaleNumLong.$el)
+      $scale__numbers.append($scaleNum.$el)
+    }
+    for (let index = start; index <= end; index++) {
+      if (end >= 2000) {index % 160 == 0 ? makeScale(index) : false}
+      else if (end >= 1000) {index % 80 == 0 ? makeScale(index) : false}
+      else if (end >= 600) {index % 40 == 0 ? makeScale(index) : false} 
+      else if (end >= 360) {index % 20 == 0 ? makeScale(index) : false} 
+      else if (end >= 150) {index % 10 == 0 ? makeScale(index) : false} 
+      else {index % 5 == 0 ? makeScale(index) : false}
+    }
+    return $scale__numbers.$el
+  }
   
-  // toHTML() {
-  //   const renderScale = this.renderScale(this.prop.sliderStart, this.prop.sliderEnd).outerHTML.trim()
-  //   return `${renderScale}`
-  // }
+  toHTML() {
+    const renderScale = this.renderScale().outerHTML.trim()
+    return `${renderScale}`
+  }
 }

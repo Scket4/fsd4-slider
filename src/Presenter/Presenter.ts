@@ -1,9 +1,9 @@
 
 import { Model } from "../Model/Model";
 import { View } from "../View/View"
-import { mouseMovePoint } from "./pointMove";
+import { pointMove } from "./pointMove";
 import { Observer } from "../core/Observer";
-import { properties } from "../core/globals";
+import { completeValue, properties } from "../core/globals";
 
 export class Presenter {
   emitter: Observer
@@ -18,16 +18,28 @@ export class Presenter {
   init() {
     this.view.init()
     this.model.init()
-    this.emitter.subscribe('modelToPresenterValueFrom', (val: number) => this.changeView(val))
-    this.emitter.subscribe('viewToPresenter', (props: properties) => this.pointMove(props))
+    this.emitter.subscribe('pointToPresenter', (e: MouseEvent, point: string) => this.pointMove(e, point))
+    this.emitter.subscribe('pointMaxMoveModelToPresenter', (values: completeValue) => this.pointMaxChange(values))
+    this.emitter.subscribe('pointMinMoveModelToPresenter', (values: completeValue) => this.pointMinChange(values))
   }
 
-  pointMove(props: properties) {
-    let values = mouseMovePoint(props)
-    this.model.valueFromChange(values.valueFromPos)
+  pointMove(e: MouseEvent, point: string) {
+    const values: properties = this.view.getData()
+    const newValue: completeValue = pointMove(e, values)
+    if (point === 'min') {
+      this.model.pointMinChange(newValue)
+      
+    } else if (point == 'max') {
+      this.model.pointMaxChange(newValue)    
+   }
   }
 
-  changeView(val: number) {
-    this.view.changeData(val)
-  } 
+  pointMaxChange(values: completeValue) {
+    this.view.pointMaxChange(values)
+  }
+
+  pointMinChange(values: completeValue) {
+    this.view.pointMinChange(values)    
+  }
+  
 }

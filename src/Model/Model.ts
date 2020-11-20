@@ -1,32 +1,50 @@
-import { completeValue } from "../core/globals"
+import { completeValue, IModel } from "../core/globals"
 import { Observer } from "../core/Observer"
 
-export class Model implements completeValue {
-  valueFromHTML: number
-  valueFromPos: number
-  valueToHTML: number
-  valueToPos: number
+export class Model implements IModel {
   emitter: Observer
+  pointMinPercent: number
+  pointMinValue: number
+  pointMinPosition: number
+  pointMaxPercent: number
+  pointMaxValue: number
+  pointMaxPosition: number
   constructor(emitter: Observer) {
-    this.valueFromHTML = 0
-    this.valueFromPos = 0
-    this.valueToHTML = 100
-    this.valueToPos = 100
+    this.pointMinPercent = 0
+    this.pointMinValue = 0
+    this.pointMinPosition = 0
+    this.pointMaxPercent = 100
+    this.pointMaxValue = 100
+    this.pointMaxPosition = 100
     this.emitter = emitter
   }
 
-  init() {
+  init() {}
+
+  pointMinChange(values: completeValue) {
+    if (this.pointMaxPercent < values.percent) {
+      this.pointMinPercent = this.pointMaxPercent
+      this.pointMinValue = this.pointMaxValue - 1
+      this.pointMinPosition = this.pointMaxPosition
+    } else {
+      this.pointMinPercent = values.percent
+      this.pointMinValue = values.value
+      this.pointMinPosition = values.position
+    }
+    this.emitter.trigger('pointMinMoveModelToPresenter', {value: this.pointMinValue, position: this.pointMinPosition} as completeValue)
   }
 
-  valueFromChange(val: completeValue) {
-    this.valueFromHTML = val.valueFromHTML
-    this.valueFromPos = val.valueFromPos
-    this.emitter.trigger('modelToPresenterValueFrom', {valueFromHTML: this.valueFromHTML, valueFromPos: this.valueFromPos} as completeValue)
+  pointMaxChange(values: completeValue) {
+    if (this.pointMinPercent > values.percent) {
+      this.pointMaxPercent = this.pointMinPercent
+      this.pointMaxValue = this.pointMinValue + 1
+      this.pointMaxPosition = this.pointMinPosition
+    } else {
+      this.pointMaxPercent = values.percent
+      this.pointMaxValue = values.value
+      this.pointMaxPosition = values.position
+    }
+    this.emitter.trigger('pointMaxMoveModelToPresenter', {value: this.pointMaxValue, position: this.pointMaxPosition} as completeValue)
   }
-
-  valueToChange(val: completeValue) {
-    this.valueToHTML = val.valueToHTML
-    this.valueToPos = val.valueToPos
-    this.emitter.trigger('modelToPresenterValueTo', {valueToHTML: this.valueToHTML, valueToPos: this.valueToPos} as completeValue)
-  }
+  
 }

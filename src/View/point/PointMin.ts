@@ -1,11 +1,11 @@
 import { Dom } from "../../core/dom";
-import { properties } from "../../core/globals";
+import { completeValue, properties, whatThumb } from "../../core/globals";
 import { Observer } from "../../core/Observer";
 import { SliderComponent } from "../../core/SliderComponents";
 
 export class PointMin extends SliderComponent {
   static className = 'point-min'
-  shiftx?: number
+  shiftX?: number
   shiftY?: number
   constructor(emitter: Observer, $root: Dom) {
     super(emitter, $root)
@@ -16,24 +16,25 @@ export class PointMin extends SliderComponent {
   getData(props: properties) {
     props.pointMinX = this.$root.$el.getBoundingClientRect().x
     props.pointMinY = this.$root.$el.getBoundingClientRect().y
-    props.shiftX = this.shiftx as number
+    props.shiftX = this.shiftX as number
     props.shiftY = this.shiftY as number
   }
 
-  changeData(val: number) {    
-    this.$root.left(val)
+  pointMinChange(values: completeValue) {
+    this.$root.left(values.position)
   }
 
   onMousedown(e: MouseEvent) {
     this.shiftY = e.clientY - this.$root.$el.getBoundingClientRect().y - 12.5
-    this.shiftx = e.clientX - this.$root.$el.getBoundingClientRect().x - 12.5
-    this.emitter.trigger('componentsToView: pointMove', e)
+    this.shiftX = e.clientX - this.$root.$el.getBoundingClientRect().x - 12.5
+    this.$root.$el.style.zIndex = '1000'    
     document.onmousemove = (e) => {
-      this.emitter.trigger('componentsToView: pointMove', e)
+      this.emitter.trigger('pointToPresenter', e, 'min')
     }
     document.onmouseup = () => {
       document.onmousedown = null
       document.onmousemove = null
+      this.$root.$el.style.zIndex = '2'
     }
   }
   

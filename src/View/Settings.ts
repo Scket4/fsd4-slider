@@ -1,5 +1,5 @@
 import { $, Dom } from "../core/dom";
-import { properties } from "../core/globals";
+import { completeValue, properties } from "../core/globals";
 import { Observer } from "../core/Observer";
 import { SliderComponent } from "../core/SliderComponents";
 
@@ -20,59 +20,20 @@ export class Settings extends SliderComponent {
     props.stepSize = 0
   }
 
-  // initVertical() {
-  //   super.initVertical()
-  //   this.$root.addClass('settingsV')
-  //   this.$root.html(this.toHTML())
-  //   this.inputMin = $('.input__min')
-  //   this.inputMax = $('.input__max')
-  //   this.current = $('.input__current')
-  //   this.currentMax = $('.input__current-max')
-  //   this.stick = $('.stick')
-  // }
-
-  // initHorizontal() {
-  //   super.initHorizontal()
-  //   this.$root.addClass('settings')
-  //   this.inputMin = $('.input__min')
-  //   this.inputMax = $('.input__max')
-  //   this.current = $('.input__current')
-  //   this.currentMax = $('.input__current-max')
-  //   this.stick = $('.stick')
-  // }
-
-  // init() {
-  //   this.inputMin = $('.input__min')
-  //   this.inputMax = $('.input__max')
-  //   this.current = $('.input__current')
-  //   this.currentMax = $('.input__current-max')
-  //   this.stick = $('.stick')
-  // }
-
-  // makeChange(prop, val) {
-  //   const v = this.prop.isVertical
-  //   this.current.$el.value = v ?  Math.floor((this.prop.positionMinV * this.prop.sliderSize) + this.prop.sliderStart)
-  //   : Math.floor((this.prop.positionMin * this.prop.sliderSize) + this.prop.sliderStart)
+  pointMinChange(values: completeValue) {
+    let current = this.$root.find('.input__current') as HTMLInputElement
+    current.value = values.value.toString()
+  }
 
 
-  //   if (prop === 'isRange') val == 1 ? this.currentMax.addClass('visible') : this.currentMax.removeClass('visible')
-  //   if (prop === 'isRange') val == 1 ? this.stick.addClass('visible') : this.stick.removeClass('visible')
-
-  //   if (this.prop.isRange == 1) {
-  //     this.currentMax.$el.value =  v ?  Math.floor((this.prop.positionMaxV * this.prop.sliderSize) + this.prop.sliderStart)
-  //     : Math.floor((this.prop.positionMax * this.prop.sliderSize) + this.prop.sliderStart)
-  //   }
-  // }
-
-  onClick(e: MouseEvent) {
-    // const $target = $(e.target)
-    // if ($target.data('checkbox')) {
-    //   $target.toggle('checkbox__active')
-    //   const type = $target.data('checkbox')
-    //   const is = $target.hasSelector('checkbox__active')
-    //   this.emitter.trigger('viewToPresenter', {[type]: is})
-    //   console.log('ok');
-    // }
+  onClick(e: MouseEvent) {    
+    const $target = $(e.target as HTMLElement)
+    if ($target.data('checkbox')) {
+      $target.toggle('checkbox__active')
+    }
+    if ($target.data('checkbox') === 'isScale') this.emitter.trigger('settingsToScale')
+    if ($target.data('checkbox') === 'isLabel') this.emitter.trigger('settingsToLabel')
+    
   }
 
   onChange(e: Event) {

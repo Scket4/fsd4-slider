@@ -106,7 +106,7 @@ export function $(selector: string | HTMLElement) {
   return new Dom(selector)
 }
 
-$.create = (tagName: string, classes = '', id = '') => {
+$.create = (tagName: string, classes = '', id: string | number = '') => {
   const el = document.createElement(tagName)
   if (classes) {
     el.classList.add(classes)

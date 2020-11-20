@@ -1,45 +1,46 @@
 import { Dom } from "../../core/dom"
-import { properties } from "../../core/globals"
+import { completeValue, properties } from "../../core/globals"
 import { Observer } from "../../core/Observer"
 import { SliderComponent } from "../../core/SliderComponents"
 
 export class PointMax extends SliderComponent {
   static className = 'point-max'
+  shiftY?: number
+  shiftX?: number 
+  onClick?: boolean
   constructor(emitter: Observer, $root: Dom) {
     super(emitter, $root)
     this.domListener.on('mousedown', (e) => this.onMousedown(e as MouseEvent))
     this.domListener.on('mouseup', () => this.onMouseup())
   }
 
-  // initHorizontal() {
-  //   super.initHorizontal()
-  //   this.$root.addClass('point-max')
-  // }
+  pointMaxChange(values: completeValue) {
+    this.$root.left(values.position)
+  }
 
-  // initVertical() {
-  //   super.initVertical()
-  //   this.$root.addClass('point-maxV')
-  //   this.$root.removeClass('visible')
-  // }
-
-  // makeChange(prop, val) {
-  //   if (prop === 'isRange') val == 1 ? this.$root.addClass('visible') : this.$root.removeClass('visible')
-  //   if (this.prop.isRange == 1) {
-  //     this.prop.isVertical ? this.$root.top(this.prop.positionMaxV * this.prop.slider.height) : this.$root.left(this.prop.positionMax * this.prop.slider.width)
-  //   }
 
   getData(props: properties) {
     props.pointMaxY = this.$root.$el.getBoundingClientRect().y
     props.pointMaxX = this.$root.$el.getBoundingClientRect().x
+    if (this.onClick == true) {
+    props.shiftX = this.shiftX as number
+    props.shiftY = this.shiftY as number
+    
+    }
   }
 
   
   onMousedown(e: MouseEvent) {
-    this.emitter.trigger('componentsToView: pointMove', e)
+    this.onClick = true
+    this.$root.$el.style.zIndex = '1000'
+    this.shiftY = e.clientY - this.$root.$el.getBoundingClientRect().y - 12.5
+    this.shiftX = e.clientX - this.$root.$el.getBoundingClientRect().x - 12.5
     document.onmousemove = e => {
-      this.emitter.trigger('componentsToView: pointMove', e)
+      this.emitter.trigger('pointToPresenter', e, 'max')
     }
     document.onmouseup = () => {
+      this.onClick = false
+      this.$root.$el.style.zIndex = '2'
       document.onmousedown = null
       document.onmousemove = null
     }

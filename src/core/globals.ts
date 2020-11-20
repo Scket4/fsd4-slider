@@ -21,9 +21,21 @@ export interface properties {
 }
 
 export interface completeValue {
-  valueFromPos: number
-  valueFromHTML: number
-  valueToPos: number
-  valueToHTML: number
-  isRange?: boolean
+  position: number
+  value: number
+  percent: number
+}
+
+export interface whatThumb {
+  e: MouseEvent
+  secodThumb: boolean
+}
+
+export interface IModel {
+  pointMinPercent?: number
+  pointMinValue?: number
+  pointMinPosition?: number
+  pointMaxPercent?: number
+  pointMaxValue?: number
+  pointMaxPosition?: number
 }

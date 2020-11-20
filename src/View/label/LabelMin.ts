@@ -1,4 +1,5 @@
 import { Dom } from "../../core/dom";
+import { completeValue } from "../../core/globals";
 import { Observer } from "../../core/Observer";
 import { SliderComponent } from "../../core/SliderComponents";
 
@@ -8,11 +9,25 @@ export class LabelMin extends SliderComponent{
     super(emitter, $root)
   }
 
+  init() {
+    this.emitter.subscribe('settingsToLabel', () => this.hideLabel())
+  }
+
+  hideLabel() {
+    this.$root.toggle('hidden')
+  }
+
   getData() {}
 
-  changeData(val: number) {    
-    this.$root.left(val)
+  pointMinChange(values: completeValue) {
+    this.$root.left(values.position)
+    this.$root.html(values.value.toString())
   }
+
+  // changeData(val: completeValue) {    
+  //   this.$root.left(val.valueFromPos)
+  //   this.$root.html(val.valueFromHTML.toString())
+  // }
 
   // initVertical() {
   //   super.initVertical()
