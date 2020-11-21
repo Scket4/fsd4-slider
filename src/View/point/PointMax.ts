@@ -36,7 +36,7 @@ export class PointMax extends SliderComponent {
     this.shiftY = e.clientY - this.$root.$el.getBoundingClientRect().y - 12.5
     this.shiftX = e.clientX - this.$root.$el.getBoundingClientRect().x - 12.5
     document.onmousemove = e => {
-      this.emitter.trigger('pointToPresenter', e, 'max')
+      this.emitter.trigger('pointToView', e, 'max')
     }
     document.onmouseup = () => {
       this.onClick = false

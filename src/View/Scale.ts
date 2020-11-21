@@ -16,6 +16,16 @@ export class Scale extends SliderComponent {
 
   getData() {}
 
+  sliderStartChange(start: number, end: number) {
+    const renderScale = this.renderScale(start, end).outerHTML.trim()
+    this.$root.html(renderScale)
+  }
+
+  sliderEndChange(start: number, end: number) {
+    const renderScale = this.renderScale(start, end).outerHTML.trim()
+    this.$root.html(renderScale)
+  }
+
   toggleClass() {
     this.$root.toggle('hidden')
   }

@@ -29,7 +29,7 @@ export class PointMin extends SliderComponent {
     this.shiftX = e.clientX - this.$root.$el.getBoundingClientRect().x - 12.5
     this.$root.$el.style.zIndex = '1000'    
     document.onmousemove = (e) => {
-      this.emitter.trigger('pointToPresenter', e, 'min')
+      this.emitter.trigger('pointToView', e, 'min')
     }
     document.onmouseup = () => {
       document.onmousedown = null

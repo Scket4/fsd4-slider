@@ -6,18 +6,17 @@ export interface properties {
   pointMaxY: number
   isVertical: boolean
   isRange: boolean
+  isLabel: boolean
+  isScale: boolean
   sliderX: number
   sliderY: number
   sliderWidth: number
   sliderHeight: number
-  positionMaxV: number
-  positionMax: number
   step: number
-  stepSize: number
-  isLabel: boolean
-  isScale: boolean
   shiftX: number
   shiftY: number
+  sliderEnd: number
+  sliderStart: number
 }
 
 export interface completeValue {
@@ -38,4 +37,12 @@ export interface IModel {
   pointMaxPercent?: number
   pointMaxValue?: number
   pointMaxPosition?: number
+}
+
+export interface presenterProperties {
+  isVertical: boolean
+  isRange: boolean
+  step: number
+  sliderEnd: number
+  sliderStart: number
 }

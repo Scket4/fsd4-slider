@@ -87,7 +87,11 @@ export class Dom {
   }
 
   getValue() {
-    return this.$el.innerHTML
+    return this.$el.value
+  }
+
+  setValue(val: number) {
+    this.$el.value = val
   }
 
   hasSelector(selector: string) {
@@ -112,7 +116,7 @@ $.create = (tagName: string, classes = '', id: string | number = '') => {
     el.classList.add(classes)
   }
   if(id) {
-    el.id = id
+    el.id = id.toString()
   }
   return $(el)
 }

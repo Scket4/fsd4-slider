@@ -25,9 +25,13 @@ export class View {
     this.$el.append(this.getRoot())
     this.components.forEach(comp => {comp.init()
     })
-    // this.emitter.subscribe('pointToView', (e: MouseEvent, point: string) => this.getData())
+    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.viewToPresenterPoint(e, point))
+    this.emitter.subscribe('settingsToView: currentMin', (val: number) => this.currentMinChange(val))
+    this.emitter.subscribe('settingsToView: currentMax', (val: number) => this.currentMaxChange(val))
+    this.emitter.subscribe('settingsToView: sliderStart', () => this.sliderStartChange())
+    this.emitter.subscribe('settingsToView: sliderEnd', () => this.sliderEndChange())
   }
-
 
   getRoot() {
     const $root = $.create('div', 'slider')
@@ -40,8 +44,36 @@ export class View {
       return component
     })
     return $root.$el
-    
   }
+
+  range() {
+    this.emitter.trigger('rangeViewToPresenter')
+  }
+
+  viewToPresenterPoint(e: MouseEvent, point: string) {
+    let data = this.getData()
+    this.emitter.trigger('ViewToPresenterPoint', e, point, data)
+  }
+
+  currentMinChange(val: number) {
+    const props = this.getData()
+    this.emitter.trigger('viewToPresenter: currentMin', val, props)
+  }
+
+  currentMaxChange(val: number) {
+    const props = this.getData()
+    this.emitter.trigger('viewToPresenter: currentMax', val, props)
+  }
+  sliderStartChange() {
+    const values: properties = this.getData()
+    this.emitter.trigger('viewToPresenter: sliderEnd', values)
+  }
+  sliderEndChange() {
+    const values: properties = this.getData()
+    this.emitter.trigger('viewToPresenter: sliderEnd', values)
+  }
+
+  
 
   getData() {
     let props: properties = {} as properties
@@ -51,16 +83,28 @@ export class View {
     return props
   }
 
-  pointMinChange(values: completeValue) {
+  pointMinApply(values: completeValue) {
     this.components.forEach(el => {
       if (el.pointMinChange) el.pointMinChange(values) 
     })
   }
 
-  pointMaxChange(values: completeValue) {
+  pointMaxApply(values: completeValue) {
     this.components.forEach(el => {
       if (el.pointMaxChange) el.pointMaxChange(values) 
       
+    })
+  }
+
+  sliderEnd(start: number, end: number) {
+    this.components.forEach(comp => {
+      if(comp.sliderEndChange) comp.sliderEndChange(start, end)
+    })
+  }
+
+  sliderStart(start: number, end: number) {
+    this.components.forEach(comp => {
+      if(comp.sliderStartChange) comp.sliderStartChange(start, end)
     })
   }
 }
