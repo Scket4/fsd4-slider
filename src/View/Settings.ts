@@ -8,7 +8,7 @@ export class Settings extends SliderComponent {
   label!: Dom
   range!: Dom
   scale!: Dom
-  vertical!: Dom
+  isVertical!: Dom
   step!: Dom
   sliderEnd!: Dom
   sliderStart!: Dom
@@ -18,14 +18,13 @@ export class Settings extends SliderComponent {
     super(emitter, $root)
     this.domListener.on('click', (e) => this.onClick(e as MouseEvent))
     this.domListener.on('change', (e) => this.onChange(e))
-
   }
 
   init() {
     this.scale = $('.is-scale')
     this.label = $('.is-label')
     this.range = $('.is-range')
-    this.vertical = $('.is-vertical')
+    this.isVertical = $('.is-vertical')
     this.step = $('.input__step')
     this.sliderStart = $('.slider-start')
     this.sliderEnd = $('.slider-end')
@@ -36,11 +35,15 @@ export class Settings extends SliderComponent {
   getData(props: properties) {
     props.isScale = this.scale.hasSelector('checkbox__active')
     props.isLabel = this.label.hasSelector('checkbox__active')
-    props.isVertical = this.vertical.hasSelector('checkbox__active')
+    props.isVertical = this.isVertical.hasSelector('checkbox__active')
     props.isRange = this.range.hasSelector('checkbox__active')
     props.step = +this.step.getValue()
     props.sliderEnd = +this.sliderEnd.getValue()
     props.sliderStart = +this.sliderStart.getValue()
+  }
+
+  vertical() {
+    this.$root.toggle('settingsV')
   }
 
   pointMinChange(values: completeValue) {
@@ -59,17 +62,17 @@ export class Settings extends SliderComponent {
     }
     if ($target.data('checkbox') === 'isScale') this.emitter.trigger('settingsToScale')
     if ($target.data('checkbox') === 'isLabel') this.emitter.trigger('settingsToLabel')
-    if ($target.data('checkbox') === 'isRange') this.emitter.trigger('rangeComponentsToView')
-    if ($target.data('checkbox') === 'isVertical') this.emitter.trigger('VerticalComponentsToView')
+    if ($target.data('checkbox') === 'isRange') this.emitter.trigger('settingsToView: range', this.currentMax.getValue())
+    if ($target.data('checkbox') === 'isVertical') this.emitter.trigger('settingsToView: vertical')
   }
 
   onChange(e: Event) {
     const $target = $(e.target as HTMLInputElement)
     const type = $target.data('type')
-    if (type === 'input__current') this.emitter.trigger('settingsToView: currentMin', this.currentMin.getValue())
-    if (type === 'input__current-max') this.emitter.trigger('settingsToView: currentMax', this.currentMax.getValue())
-    if (type === 'slider-start') this.emitter.trigger('settingsToView: sliderStart')
-    if (type === 'slider-end') this.emitter.trigger('settingsToView: sliderEnd')
+    if (type === 'input__current') this.emitter.trigger('settingsToView: current', this.currentMin.getValue(), 'min')
+    if (type === 'input__current-max') this.emitter.trigger('settingsToView: current', this.currentMax.getValue(), 'max')
+    if (type === 'slider-start') this.emitter.trigger('settingsToView: sliderSize', 'min')
+    if (type === 'slider-end') this.emitter.trigger('settingsToView: sliderSize', 'max')
   }
 
   toHTML() {

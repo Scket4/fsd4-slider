@@ -9,6 +9,10 @@ export class LabelMin extends SliderComponent{
     super(emitter, $root)
   }
 
+  vertical() {
+    this.$root.toggle('label-minV')
+  }
+
   init() {
     this.emitter.subscribe('settingsToLabel', () => this.hideLabel())
   }
@@ -20,8 +24,12 @@ export class LabelMin extends SliderComponent{
   getData() {}
 
   pointMinChange(values: completeValue) {
-    this.$root.left(values.position)
     this.$root.html(values.value.toString())
+    if (!values.isVertical) {
+      this.$root.left(values.position)
+    } else {
+      this.$root.top(values.position)
+    }
   }
 
 

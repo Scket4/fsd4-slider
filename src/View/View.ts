@@ -25,12 +25,11 @@ export class View {
     this.$el.append(this.getRoot())
     this.components.forEach(comp => {comp.init()
     })
-    this.emitter.subscribe('rangeComponentsToView', () => this.range())
-    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.viewToPresenterPoint(e, point))
-    this.emitter.subscribe('settingsToView: currentMin', (val: number) => this.currentMinChange(val))
-    this.emitter.subscribe('settingsToView: currentMax', (val: number) => this.currentMaxChange(val))
-    this.emitter.subscribe('settingsToView: sliderStart', () => this.sliderStartChange())
-    this.emitter.subscribe('settingsToView: sliderEnd', () => this.sliderEndChange())
+    this.emitter.subscribe('settingsToView: range', (currentMax: number) => this.range(currentMax))
+    this.emitter.subscribe('settingsToView: vertical', () => this.vertical())
+    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.pointMove(e, point))
+    this.emitter.subscribe('settingsToView: current', (val: number, current: string) => this.currentChange(val, current))
+    this.emitter.subscribe('settingsToView: sliderSize', (minMax: string) => this.sliderSizeChange(minMax))
   }
 
   getRoot() {
@@ -46,31 +45,32 @@ export class View {
     return $root.$el
   }
 
-  range() {
-    this.emitter.trigger('rangeViewToPresenter')
+  range(currentMax: number) {
+    const props = this.getData()
+    this.emitter.trigger('viewToPresenter: range', currentMax, props, 'max')
   }
 
-  viewToPresenterPoint(e: MouseEvent, point: string) {
+  vertical() {
+    this.components.forEach(el => {
+      if (el.vertical) el.vertical()
+    })
+    const $el = $('.slider')
+    $el.toggle('sliderV')
+  }
+
+  pointMove(e: MouseEvent, point: string) {
     let data = this.getData()
-    this.emitter.trigger('ViewToPresenterPoint', e, point, data)
+    this.emitter.trigger('viewToPresenter: pointMove', e, point, data)
   }
 
-  currentMinChange(val: number) {
+  currentChange(val: number, current: string) {
     const props = this.getData()
-    this.emitter.trigger('viewToPresenter: currentMin', val, props)
+    this.emitter.trigger('viewToPresenter: current', val, props, current)
   }
 
-  currentMaxChange(val: number) {
-    const props = this.getData()
-    this.emitter.trigger('viewToPresenter: currentMax', val, props)
-  }
-  sliderStartChange() {
+  sliderSizeChange(minMax: string) {
     const values: properties = this.getData()
-    this.emitter.trigger('viewToPresenter: sliderEnd', values)
-  }
-  sliderEndChange() {
-    const values: properties = this.getData()
-    this.emitter.trigger('viewToPresenter: sliderEnd', values)
+    this.emitter.trigger('viewToPresenter: sliderSize', values, minMax)
   }
 
   
@@ -96,15 +96,15 @@ export class View {
     })
   }
 
-  sliderEnd(start: number, end: number) {
+  sliderEndApply(start: number, end: number, v: boolean) {
     this.components.forEach(comp => {
-      if(comp.sliderEndChange) comp.sliderEndChange(start, end)
+      if(comp.sliderEndChange) comp.sliderEndChange(start, end, v)
     })
   }
 
-  sliderStart(start: number, end: number) {
+  sliderStartApply(start: number, end: number, v: boolean) {
     this.components.forEach(comp => {
-      if(comp.sliderStartChange) comp.sliderStartChange(start, end)
+      if(comp.sliderStartChange) comp.sliderStartChange(start, end, v)
     })
   }
 }

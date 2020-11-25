@@ -22,7 +22,7 @@ export class Model implements IModel {
   init() {}
 
   pointMinChange(values: completeValue) {
-    if (this.pointMaxPercent < values.percent) {
+    if (this.pointMaxPercent < values.percent && values.isRange === true) {
       this.pointMinPercent = this.pointMaxPercent
       this.pointMinValue = this.pointMaxValue - 1
       this.pointMinPosition = this.pointMaxPosition
@@ -31,10 +31,12 @@ export class Model implements IModel {
       this.pointMinValue = values.value
       this.pointMinPosition = values.position
     }
-    this.emitter.trigger('pointMinMoveModelToPresenter', {value: this.pointMinValue, position: this.pointMinPosition} as completeValue)
+    values.value = this.pointMinValue
+    values.position = this.pointMinPosition
+    this.emitter.trigger('pointMinMoveModelToPresenter', values as completeValue)
   }
 
-  pointMaxChange(values: completeValue) {
+  pointMaxChange(values: completeValue) {    
     if (this.pointMinPercent > values.percent) {
       this.pointMaxPercent = this.pointMinPercent
       this.pointMaxValue = this.pointMinValue + 1
@@ -44,7 +46,9 @@ export class Model implements IModel {
       this.pointMaxValue = values.value
       this.pointMaxPosition = values.position
     }
-    this.emitter.trigger('pointMaxMoveModelToPresenter', {value: this.pointMaxValue, position: this.pointMaxPosition} as completeValue)
+    values.value = this.pointMaxValue
+    values.position = this.pointMaxPosition
+    this.emitter.trigger('pointMaxMoveModelToPresenter', values as completeValue)
   }
   
 }

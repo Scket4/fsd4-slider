@@ -23,6 +23,10 @@ export interface completeValue {
   position: number
   value: number
   percent: number
+  isRange: boolean
+  isVertical: boolean
+  minPos: number
+  maxPos: number
 }
 
 export interface whatThumb {

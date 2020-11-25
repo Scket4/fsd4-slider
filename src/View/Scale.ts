@@ -13,6 +13,16 @@ export class Scale extends SliderComponent {
     this.emitter.subscribe('settingsToScale', () => this.toggleClass())
   }
 
+  vertical() {
+    this.$root.toggle('scaleV')
+    const $scaleNumbers = $('.scale__numbers')
+    const $longNumbers = document.querySelectorAll('.long__numbers')
+    const $longNumbersNumber = document.querySelectorAll('.long__numbers-number')
+    $scaleNumbers.toggle('scale__numbersV')
+    $longNumbers.forEach(el => el.classList.toggle('long__numbersV'))
+    $longNumbersNumber.forEach(el => el.classList.toggle('long__numbers-numberV'))
+  }
+
 
   getData() {}
 

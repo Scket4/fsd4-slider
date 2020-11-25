@@ -16,15 +16,7 @@ export class SliderComponent {
   }
   init() { }
 
-  // initVertical() {
-  //   this.$root.$el.className = ''
-  //   this.$root.$el.style = ''
-  // }
-
-  // initHorizontal() {
-  //   this.$root.$el.className = ''
-  //   this.$root.$el.style = ''
-  // }
+  vertical() {}
 
   // getData() {}
 }

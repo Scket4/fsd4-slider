@@ -14,8 +14,24 @@ export class PointMax extends SliderComponent {
     this.domListener.on('mouseup', () => this.onMouseup())
   }
 
+  init() {
+    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+  }
+
+  range() {
+    this.$root.toggle('visible')
+  }
+
+  vertical() {
+    this.$root.toggle('point-maxV')
+  }
+
   pointMaxChange(values: completeValue) {
-    this.$root.left(values.position)
+    if (!values.isVertical) {
+      this.$root.left(values.position)
+    } else {
+      this.$root.top(values.position)
+    }
   }
 
 

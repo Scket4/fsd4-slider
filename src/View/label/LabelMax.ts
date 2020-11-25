@@ -12,9 +12,18 @@ export class LabelMax extends SliderComponent{
   
   getData() {}
 
+  vertical() {
+    this.$root.toggle('label-maxV')
+  }
+
 
   init() {
     this.emitter.subscribe('settingsToLabel', () => this.hideLabel())
+    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+  }
+
+  range() {
+    this.$root.toggle('visible')
   }
 
   hideLabel() {
@@ -22,9 +31,16 @@ export class LabelMax extends SliderComponent{
   }
   
   pointMaxChange(values: completeValue) {
-    this.$root.left(values.position)
     this.$root.html(values.value.toString())
+    if (!values.isVertical) {
+      this.$root.left(values.position)
+    } else {
+      this.$root.top(values.position)
+    }
   }
 
-  
+  toHTML() {
+    return '100'
+  }
+
 }

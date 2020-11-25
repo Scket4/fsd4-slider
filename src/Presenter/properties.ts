@@ -14,9 +14,9 @@ export class Properties implements presenterProperties {
     this.sliderStart = 0
   }
 
-  changeData(props: properties) {
-    this.isVertical = props.isVertical || this.isVertical
-    this.isRange = props.isRange || this.isRange
+  changeData(props: properties) {    
+    this.isVertical = props.isVertical === undefined ? this.isVertical : props.isVertical
+    this.isRange = props.isRange === undefined ? this.isRange : props.isRange
     this.step = props.step || this.step
     this.sliderEnd = props.sliderEnd || this.sliderEnd
     this.sliderStart = props.sliderStart || this.sliderStart

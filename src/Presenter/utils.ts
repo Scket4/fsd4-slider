@@ -1,7 +1,7 @@
 import { completeValue, presenterProperties, properties } from "../core/globals"
 
-export function pointMove(e: MouseEvent, props: properties, presenterProps: presenterProperties) {
-  const v = presenterProps.isVertical
+export function pointMove(e: MouseEvent, props: properties, newprops: presenterProperties) {
+  const v = newprops.isVertical
   const shift = v ? props.shiftY : props.shiftX
   const client = v ? 'clientY' : 'clientX'
   const sliderXY = v ? props.sliderY : props.sliderX
@@ -10,67 +10,78 @@ export function pointMove(e: MouseEvent, props: properties, presenterProps: pres
   let val: number = e[client] - sliderXY - shift  
   val = val > sliderWH ? sliderWH : val < 0 ? 0 : val
 
-  const stepSize = (props.sliderWidth - 12) / ((presenterProps.sliderEnd - presenterProps.sliderStart) / presenterProps.step)
-  val = presenterProps.step === 0 ?  val : Math.round(val / stepSize) * stepSize
+  const stepSize = (props.sliderWidth - 12) / ((newprops.sliderEnd - newprops.sliderStart) / newprops.step)
+  val = newprops.step === 0 ?  val : Math.round(val / stepSize) * stepSize
 
   val = val / sliderWH
   let values: completeValue
 
+  const maxPos = v ? (props.pointMaxY - sliderXY) : (props.pointMaxX - sliderXY)
+  const minPos = v ? (props.pointMinY - sliderXY) : (props.pointMinX - sliderXY)
+  
   values = {
-    position: val * props.sliderWidth,
-    value: Math.ceil(val * (presenterProps.sliderEnd - presenterProps.sliderStart) + presenterProps.sliderStart),
-    percent: val
+    position: val * (v ? props.sliderHeight : props.sliderWidth),
+    value: Math.ceil(val * (newprops.sliderEnd - newprops.sliderStart) + newprops.sliderStart),
+    percent: val,
+    isRange: newprops.isRange,
+    minPos: minPos,
+    maxPos: maxPos,
+    isVertical: newprops.isVertical
   } as completeValue
   
   return values
 }
 
-export function currentMinChange(val: number, props: properties) {
-  let newVal = val / props.sliderEnd
+export function currentChange(val: number, props: properties, newprops: presenterProperties) {
+  const v = newprops.isVertical
+  const sliderWH = v ? props.sliderHeight : props.sliderWidth
+  const sliderXY = v ? props.sliderY : props.sliderX
+  let newVal = val / newprops.sliderEnd
   newVal = newVal > 1 ? 1 : newVal < 0 ? 0 : newVal
+
+  const maxPos = v ? (props.pointMaxY - sliderXY) : (props.pointMaxX - sliderXY)
+  const minPos = v ? (props.pointMinY - sliderXY) : (props.pointMinX - sliderXY)
 
   let values: completeValue
   values = {
     position: newVal * props.sliderWidth,
-    value: Math.ceil(newVal * (props.sliderEnd - props.sliderStart) + props.sliderStart),
-    percent: val
+    value: Math.ceil(newVal * (newprops.sliderEnd - newprops.sliderStart) + newprops.sliderStart),
+    percent: val,
+    isRange: newprops.isRange,
+    maxPos: maxPos,
+    minPos: minPos,
+    isVertical: newprops.isVertical
   }
   return values
 }
 
 
-export function currentMaxChange(val: number, props: properties): completeValue {
-  let newValue = val / props.sliderEnd
-  newValue = newValue > 1 ? 1 : newValue < 0 ? 0 : newValue
-
-  let values: completeValue
-  values = {
-    position: newValue * props.sliderWidth,
-    value: Math.ceil(newValue * (props.sliderEnd - props.sliderStart)),
-    percent: val
-  }
-  return values
-}
-
-export function sliderStartChange(props: properties, newprops: presenterProperties) {
+export function sliderSizeChange(props: properties, newprops: presenterProperties) {
   const v = newprops.isVertical
+  const sliderXY = v ? props.sliderY : props.sliderX
+  const sliderWH = v ? props.sliderHeight : props.sliderWidth
+
   let position: number
   if (v) {
   position = (props.pointMinY - props.sliderY + 12.5) / props.sliderHeight
-  }else { 
+  } else { 
   position = (props.pointMinX -  props.sliderX + 12.5) / props.sliderWidth
   }  
-  
+
+  const maxPos = v ? (props.pointMaxY - sliderXY) : (props.pointMaxX - sliderXY)
+  const minPos = v ? (props.pointMinY - sliderXY) : (props.pointMinX - sliderXY)
+
   const value = Math.ceil(position * (newprops.sliderEnd - newprops.sliderStart) + newprops.sliderStart)
   const values: completeValue = {
     value: value,
     position: position * props.sliderWidth,
-    percent: position
+    percent: position,
+    isRange: newprops.isRange,
+    minPos: minPos,
+    maxPos: maxPos,
+    isVertical: newprops.isVertical
   }
   return values
 }
-
-export function sliderEndChange(props: properties) {}
-
 
 

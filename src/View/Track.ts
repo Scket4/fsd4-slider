@@ -10,27 +10,18 @@ export class Track extends SliderComponent {
     this.domListener.on('click', (e) => this.onClick(e as MouseEvent))
   }
 
-  // initHorizontal() {
-  //   super.initHorizontal()
-  //   this.$root.addClass('track')
-  // }
+  vertical() {
+    this.$root.toggle('trackV')
+  }
 
   getData(props: properties) {
     props.sliderWidth = this.$root.$el.getBoundingClientRect().width
     props.sliderHeight = this.$root.$el.getBoundingClientRect().height
     props.sliderX = this.$root.$el.getBoundingClientRect().x
-    props.sliderY = this.$root.$el.getBoundingClientRect().x
+    props.sliderY = this.$root.$el.getBoundingClientRect().y
   }
    
-  // initVertical() {
-  //   super.initVertical()
-  //   this.$root.addClass('trackV') 
-  //   this.prop.slider = this.$root.$el.getBoundingClientRect()
-  // }
 
-  // makeChange() {
-  //   this.prop.slider = this.$root.$el.getBoundingClientRect()
-  // }
 
   onClick(e: MouseEvent) {
   //   let val = 0
