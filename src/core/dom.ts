@@ -1,11 +1,12 @@
-class Dom {
-  constructor(selector) {
+export class Dom {
+  $el: HTMLElement
+  constructor(selector: string | HTMLElement) {
     this.$el = typeof selector === 'string'
-    ? document.querySelector(selector)
+    ? document.querySelector(selector) as HTMLElement
     : selector
   }
 
-  html(html) {
+  html(html: string) {
     if (typeof html === 'string' || typeof html === 'number')  {
       this.$el.innerHTML = html
       return this
@@ -13,19 +14,19 @@ class Dom {
       return this.$el.outerHTML.trim()
   }
 
-  on(eventType, fn) {
+  on(eventType: string, fn: EventListener) {
     this.$el.addEventListener(eventType, fn)
   }
-  off(eventType, fn) {
+  off(eventType: string, fn: EventListener) {
     this.$el.removeEventListener(eventType, fn)
   }
 
   clear() {
-    this.$el.html('')
+    this.$el.innerHTML = ''
     return this
   }
 
-  append(node) {
+  append(node: Node) {
     if (node instanceof Dom) {
       node = node.$el
     }
@@ -41,11 +42,11 @@ class Dom {
     this.$el.remove()
   } 
 
-  addClass(selector) {
+  addClass(selector: string) {
     this.$el.classList.add(selector)
   }
 
-  removeClass(selector) {
+  removeClass(selector: string) {
     this.$el.classList.remove(selector)
   }
 
@@ -57,31 +58,31 @@ class Dom {
     return this.$el.getBoundingClientRect().x
   }
 
-  left(val) {
+  left(val: number) {
     this.$el.style.left = val - 12.5 + 'px'
   }
 
-  width(val) {
+  width(val: number) {
     this.$el.style.width = val + 'px'
   }
 
-  height(val) {
+  height(val: number) {
     this.$el.style.height = val + 'px'
   }
 
-  top(val) {
+  top(val: number) {
     this.$el.style.top = val - 12.5 + 'px'
   }
 
-  find(selector) {
+  find(selector: string) {
     return this.$el.querySelector(selector)
   }
 
-  data(type) {
+  data(type: string) {
     return this.$el.dataset[type]
   }
 
-  toggle(selector) {
+  toggle(selector: string) {
     this.$el.classList.toggle(selector)
   }
 
@@ -89,7 +90,11 @@ class Dom {
     return this.$el.value
   }
 
-  hasSelector(selector) {
+  setValue(val: number) {
+    this.$el.value = val
+  }
+
+  hasSelector(selector: string) {
     return this.$el.classList.contains(selector)
   }
 
@@ -101,17 +106,17 @@ class Dom {
 
 
 
-export function $(selector) {
+export function $(selector: string | HTMLElement) {
   return new Dom(selector)
 }
 
-$.create = (tagName, classes = '', id = '') => {
+$.create = (tagName: string, classes = '', id: string | number = '') => {
   const el = document.createElement(tagName)
   if (classes) {
     el.classList.add(classes)
   }
   if(id) {
-    el.id = id
+    el.id = id.toString()
   }
   return $(el)
 }
