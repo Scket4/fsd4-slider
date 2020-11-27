@@ -1,1 +1,1 @@
-# Jquery plugin customizerrange-slider
+# Jquery plugin customizable range-slider
