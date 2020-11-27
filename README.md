@@ -1,1 +1,1 @@
-# fsd4-slider
+# Jquery plugin customizerrange-slider
