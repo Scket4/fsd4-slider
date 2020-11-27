@@ -19,7 +19,7 @@ export class LabelMax extends SliderComponent{
 
   init() {
     this.emitter.subscribe('settingsToLabel', () => this.hideLabel())
-    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+    this.emitter.subscribe('settingsToView: range', () => this.range())
   }
 
   range() {

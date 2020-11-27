@@ -25,9 +25,10 @@ export class View {
     this.$el.append(this.getRoot())
     this.components.forEach(comp => {comp.init()
     })
+    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.pointMove(e, point))
+    this.emitter.subscribe('trackToView: click',(e: MouseEvent) => this.clickMove(e))
     this.emitter.subscribe('settingsToView: range', (currentMax: number) => this.range(currentMax))
     this.emitter.subscribe('settingsToView: vertical', () => this.vertical())
-    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.pointMove(e, point))
     this.emitter.subscribe('settingsToView: current', (val: number, current: string) => this.currentChange(val, current))
     this.emitter.subscribe('settingsToView: sliderSize', (minMax: string) => this.sliderSizeChange(minMax))
   }
@@ -61,6 +62,11 @@ export class View {
   pointMove(e: MouseEvent, point: string) {
     let data = this.getData()
     this.emitter.trigger('viewToPresenter: pointMove', e, point, data)
+  }
+
+  clickMove(e: MouseEvent) {
+    const values: properties = this.getData()
+    this.emitter.trigger('viewToPresenter: click', e, values)
   }
 
   currentChange(val: number, current: string) {

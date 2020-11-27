@@ -15,7 +15,7 @@ export class PointMax extends SliderComponent {
   }
 
   init() {
-    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+    this.emitter.subscribe('settingsToView: range', () => this.range())
   }
 
   range() {

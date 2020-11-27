@@ -1,7 +1,7 @@
 
 import { Model } from "../Model/Model";
 import { View } from "../View/View"
-import { currentChange, pointMove, sliderSizeChange } from "./utils";
+import { clickMove, currentChange, pointMove, sliderSizeChange } from "./utils";
 import { Observer } from "../core/Observer";
 import { completeValue, properties } from "../core/globals";
 import { Properties } from "./properties";
@@ -22,6 +22,7 @@ export class Presenter {
     this.view.init()
     this.model.init()    
     this.emitter.subscribe('viewToPresenter: pointMove', (e: MouseEvent, point: string, values: properties) => this.pointMove(e, point, values))
+    this.emitter.subscribe('viewToPresenter: click', (e: MouseEvent, values: properties) => this.clickMove(e, values))
     this.emitter.subscribe('viewToPresenter: range', (currentMax: number, props: properties, max: string) => this.currentChange(currentMax, props, max))
     this.emitter.subscribe('viewToPresenter: current', (val: number, props: properties, current: string) => this.currentChange(val, props, current))
     this.emitter.subscribe('viewToPresenter: sliderSize', (values: properties, startEnd: string) => this.sliderSizeChange(values, startEnd))
@@ -39,6 +40,12 @@ export class Presenter {
     } else if (point == 'max') {
       this.model.pointMaxChange(newValue)    
    }
+  }
+
+  clickMove(e: MouseEvent, values: properties) {
+    this.props.changeData(values)
+    const newValue: completeValue = clickMove(e, values, this.props)
+    this.model.pointMinChange(newValue)
   }
 
   currentChange(val: number, props: properties, current: string) {
