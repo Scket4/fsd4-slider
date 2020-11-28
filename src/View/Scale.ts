@@ -1,16 +1,27 @@
 import { $, Dom } from "../core/dom";
+import { presenterProperties } from "../core/globals";
 import { Observer } from "../core/Observer";
 import { SliderComponent } from "../core/SliderComponents";
 
 export class Scale extends SliderComponent {
   static className = 'slider__scale'
+  sliderStart: number
+  sliderEnd: number
   constructor(emitter: Observer, $root: Dom) {
     super(emitter, $root)
     this.domListener.on('click', (e) => this.onClick(e as MouseEvent))
+    this.sliderEnd = 100
+    this.sliderStart = 0
   }
 
   init() {
     this.emitter.subscribe('settingsToScale', () => this.toggleClass())
+  }
+
+  setValues(values: presenterProperties) {
+    this.sliderStart = values.sliderStart
+    this.sliderEnd = values.sliderEnd
+    console.log(this.sliderEnd, this.sliderStart)
   }
 
   vertical() {
@@ -56,7 +67,7 @@ export class Scale extends SliderComponent {
   }
 
 
-  renderScale(start: number = 0, end: number = 100) {
+  renderScale(start: number, end: number) {
     const $scale__numbers = $.create('div', `scale__numbers`)
     const makeScale = (index: number) => {
       const $scaleNum = $.create('div', 'long__numbers', index)
@@ -77,7 +88,7 @@ export class Scale extends SliderComponent {
   }
   
   toHTML() {
-    const renderScale = this.renderScale().outerHTML.trim()
+    const renderScale = this.renderScale(this.sliderStart, this.sliderEnd).outerHTML.trim()
     return `${renderScale}`
   }
 }

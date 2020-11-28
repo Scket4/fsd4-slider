@@ -4,11 +4,15 @@ import { Slider } from './core/Slider';
 
 let slider = new Slider('.main')
 
-slider.render()
-
-// let slider2 = new Slider('.main-2')
-
-// slider2.render()
+slider.render(
+  // {
+  // isRange: false,
+  // isVertical: true,
+  // step: 10,
+  // sliderEnd: 100,
+  // sliderStart: 0
+// }
+)
 
 
 

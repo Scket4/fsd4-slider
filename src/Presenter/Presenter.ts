@@ -19,7 +19,7 @@ export class Presenter {
   }
 
   init() {
-    this.view.init()
+    this.view.init(this.props)
     this.model.init()    
     this.emitter.subscribe('viewToPresenter: pointMove', (e: MouseEvent, point: string, values: properties) => this.pointMove(e, point, values))
     this.emitter.subscribe('viewToPresenter: click', (e: MouseEvent, values: properties) => this.clickMove(e, values))

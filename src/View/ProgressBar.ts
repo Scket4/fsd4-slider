@@ -1,5 +1,5 @@
 import { Dom } from "../core/dom";
-import { completeValue } from "../core/globals";
+import { completeValue, presenterProperties } from "../core/globals";
 import { Observer } from "../core/Observer";
 import { SliderComponent } from "../core/SliderComponents";
 
@@ -11,6 +11,17 @@ export class ProgressBar extends SliderComponent {
 
   vertical() {
     this.$root.toggle('progress-barV')
+  }
+
+  setValues(values: presenterProperties) {
+    if (values.isRange) {
+      if (values.isVertical) {
+         this.$root.$el.style.height = '100%' 
+         this.$root.width(3)
+      } else { 
+        this.$root.$el.style.width = '100%'
+      }
+    }
   }
 
   pointMinChange(values: completeValue) {

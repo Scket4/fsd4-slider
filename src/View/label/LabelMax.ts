@@ -1,5 +1,5 @@
 import { Dom } from "../../core/dom";
-import { completeValue } from "../../core/globals";
+import { completeValue, presenterProperties } from "../../core/globals";
 import { Observer } from "../../core/Observer";
 import { SliderComponent } from "../../core/SliderComponents";
 
@@ -14,6 +14,10 @@ export class LabelMax extends SliderComponent{
 
   vertical() {
     this.$root.toggle('label-maxV')
+  }
+
+  setValues(values: presenterProperties) {
+    if (values.isRange) this.$root.addClass('visible')
   }
 
 
