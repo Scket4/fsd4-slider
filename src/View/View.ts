@@ -59,6 +59,8 @@ export class View {
     })
     const $el = $('.slider')
     $el.toggle('sliderV')
+    const data = this.getData()
+    this.emitter.trigger('viewToPresenter: vertical', data)
   }
 
   pointMove(e: MouseEvent, point: string) {

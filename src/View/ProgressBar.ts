@@ -11,6 +11,10 @@ export class ProgressBar extends SliderComponent {
 
   vertical() {
     this.$root.toggle('progress-barV')
+    this.$root.top(12.5)
+    this.$root.width(3)
+    this.$root.height(3)
+    this.$root.left(12.5)
   }
 
   setValues(values: presenterProperties) {

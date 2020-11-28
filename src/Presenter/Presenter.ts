@@ -26,6 +26,7 @@ export class Presenter {
     this.emitter.subscribe('viewToPresenter: range', (currentMax: number, props: properties, max: string) => this.currentChange(currentMax, props, max))
     this.emitter.subscribe('viewToPresenter: current', (val: number, props: properties, current: string) => this.currentChange(val, props, current))
     this.emitter.subscribe('viewToPresenter: sliderSize', (values: properties, startEnd: string) => this.sliderSizeChange(values, startEnd))
+    this.emitter.subscribe('viewToPresenter: vertical', (data: properties) => this.vertical(data))
 
     this.emitter.subscribe('pointMaxMoveModelToPresenter', (values: completeValue) => this.pointMaxApply(values))
     this.emitter.subscribe('pointMinMoveModelToPresenter', (values: completeValue) => this.pointMinApply(values))
@@ -66,6 +67,10 @@ export class Presenter {
     this.model.pointMinChange(value)
     this.view.sliderEndApply(values.sliderStart, values.sliderEnd, this.props.isVertical)
     }
+  }
+
+  vertical(data: properties) {
+    this.props.changeData(data)
   }
 
 

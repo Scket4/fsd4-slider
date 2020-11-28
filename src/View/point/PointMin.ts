@@ -30,6 +30,8 @@ export class PointMin extends SliderComponent {
 
   vertical() {
     this.$root.toggle('point-minV')
+    this.$root.left(0)
+    this.$root.top(0)
   }
 
   onMousedown(e: MouseEvent) {

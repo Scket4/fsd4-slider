@@ -11,6 +11,14 @@ export class LabelMin extends SliderComponent{
 
   vertical() {
     this.$root.toggle('label-minV')
+    if (this.$root.hasSelector('label-minV')) {
+      this.$root.left(-30)
+      this.$root.top(0)
+    } else {
+      this.$root.top(-35)
+      this.$root.left(0)
+    }
+    this.$root.html('0')
   }
 
   init() {
