@@ -16,8 +16,8 @@ export function pointMove(e: MouseEvent, props: properties, newprops: presenterP
   val = val / sliderWH
   let values: completeValue
 
-  const maxPos = v ? (props.pointMaxY - sliderXY) : (props.pointMaxX - sliderXY)
   const minPos = v ? (props.pointMinY - sliderXY) : (props.pointMinX - sliderXY)
+  const maxPos = v ? (props.pointMaxY - sliderXY) : (props.pointMaxX - sliderXY)
   
   values = {
     position: val * (v ? props.sliderHeight : props.sliderWidth),
@@ -29,6 +29,35 @@ export function pointMove(e: MouseEvent, props: properties, newprops: presenterP
     isVertical: newprops.isVertical
   } as completeValue
   
+  return values
+}
+ 
+export function clickMove(e: MouseEvent, props: properties, newProps: presenterProperties) {
+  const v = newProps.isVertical
+  const client = v ? 'clientY' : 'clientX'
+  const sliderWH = v ? props.sliderHeight : props.sliderWidth
+  const sliderXY = v ? props.sliderY : props.sliderX
+
+  let val: number = e[client] - sliderXY
+
+  const stepSize = (props.sliderWidth - 12) / ((newProps.sliderEnd - newProps.sliderStart) / newProps.step)
+  val = newProps.step === 0 ?  val : Math.round(val / stepSize) * stepSize
+  
+  val = val / sliderWH
+
+  const minPos = v ? (props.pointMinY - sliderXY) : (props.pointMinX - sliderXY)
+  const maxPos = v ? (props.pointMaxY - sliderXY) : (props.pointMaxX - sliderXY)
+
+  const values: completeValue = {
+    position: val * (v ? props.sliderHeight : props.sliderWidth),
+    value: Math.ceil(val * (newProps.sliderEnd - newProps.sliderStart) + newProps.sliderStart),
+    percent: val,
+    isRange: newProps.isRange,
+    minPos: minPos,
+    maxPos: maxPos,
+    isVertical: newProps.isVertical
+  }
+
   return values
 }
 

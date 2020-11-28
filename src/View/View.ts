@@ -8,7 +8,7 @@ import { PointMax } from "./point/PointMax"
 import { LabelMax } from "./label/LabelMax"
 import { ProgressBar } from "./ProgressBar"
 import { Observer } from "../core/Observer"
-import { completeValue, properties, whatThumb } from "../core/globals"
+import { completeValue, presenterProperties, properties, whatThumb } from "../core/globals"
 import { Compilation } from "webpack"
 
 export class View {
@@ -21,23 +21,26 @@ export class View {
     this.components = [Track, Scale, PointMin, PointMax, LabelMin, LabelMax, ProgressBar, Settings]
   }
 
-  init() {
-    this.$el.append(this.getRoot())
+  init(values: presenterProperties) {
+    this.$el.append(this.getRoot(values))
     this.components.forEach(comp => {comp.init()
     })
+    if (values.isVertical) this.vertical()
+    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.pointMove(e, point))
+    this.emitter.subscribe('trackToView: click',(e: MouseEvent) => this.clickMove(e))
     this.emitter.subscribe('settingsToView: range', (currentMax: number) => this.range(currentMax))
     this.emitter.subscribe('settingsToView: vertical', () => this.vertical())
-    this.emitter.subscribe('pointToView',(e: MouseEvent, point: string) => this.pointMove(e, point))
     this.emitter.subscribe('settingsToView: current', (val: number, current: string) => this.currentChange(val, current))
     this.emitter.subscribe('settingsToView: sliderSize', (minMax: string) => this.sliderSizeChange(minMax))
   }
 
-  getRoot() {
+  getRoot(values: presenterProperties) {
     const $root = $.create('div', 'slider')
 
     this.components = this.components.map(Comp => {
       const $el = $.create('div', Comp.className)
       const component = new Comp(this.emitter, $el)
+      if (component.setValues) component.setValues(values)
       $el.html(component.toHTML())
       $root.append($el.$el)
       return component
@@ -61,6 +64,11 @@ export class View {
   pointMove(e: MouseEvent, point: string) {
     let data = this.getData()
     this.emitter.trigger('viewToPresenter: pointMove', e, point, data)
+  }
+
+  clickMove(e: MouseEvent) {
+    const values: properties = this.getData()
+    this.emitter.trigger('viewToPresenter: click', e, values)
   }
 
   currentChange(val: number, current: string) {

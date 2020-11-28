@@ -24,6 +24,7 @@ export class Track extends SliderComponent {
 
 
   onClick(e: MouseEvent) {
+    this.emitter.trigger('trackToView: click', e)
   //   let val = 0
   //   e.preventDefault()
   //   const pos = this.prop.isVertical ? 'positionMinV' : 'positionMin'

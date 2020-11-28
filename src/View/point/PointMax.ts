@@ -1,5 +1,5 @@
 import { Dom } from "../../core/dom"
-import { completeValue, properties } from "../../core/globals"
+import { completeValue, presenterProperties, properties } from "../../core/globals"
 import { Observer } from "../../core/Observer"
 import { SliderComponent } from "../../core/SliderComponents"
 
@@ -14,8 +14,12 @@ export class PointMax extends SliderComponent {
     this.domListener.on('mouseup', () => this.onMouseup())
   }
 
+  setValues(values: presenterProperties) {
+    if (values.isRange) this.$root.addClass('visible')
+  }
+
   init() {
-    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+    this.emitter.subscribe('settingsToView: range', () => this.range())
   }
 
   range() {

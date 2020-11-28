@@ -1,5 +1,5 @@
 import { Dom } from "../../core/dom";
-import { completeValue } from "../../core/globals";
+import { completeValue, presenterProperties } from "../../core/globals";
 import { Observer } from "../../core/Observer";
 import { SliderComponent } from "../../core/SliderComponents";
 
@@ -16,10 +16,14 @@ export class LabelMax extends SliderComponent{
     this.$root.toggle('label-maxV')
   }
 
+  setValues(values: presenterProperties) {
+    if (values.isRange) this.$root.addClass('visible')
+  }
+
 
   init() {
     this.emitter.subscribe('settingsToLabel', () => this.hideLabel())
-    this.emitter.subscribe('rangeComponentsToView', () => this.range())
+    this.emitter.subscribe('settingsToView: range', () => this.range())
   }
 
   range() {

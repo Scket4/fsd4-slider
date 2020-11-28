@@ -14,6 +14,7 @@ export class Settings extends SliderComponent {
   sliderStart!: Dom
   currentMin!: Dom
   currentMax!: Dom
+  stick!: Dom
   constructor(emitter: Observer, $root: Dom) {
     super(emitter, $root)
     this.domListener.on('click', (e) => this.onClick(e as MouseEvent))
@@ -29,7 +30,8 @@ export class Settings extends SliderComponent {
     this.sliderStart = $('.slider-start')
     this.sliderEnd = $('.slider-end')
     this.currentMax = $('.input__current-max')
-    this.currentMin = $('.input__current')    
+    this.currentMin = $('.input__current')
+    this.stick = $('.stick')    
   }
 
   getData(props: properties) {
@@ -54,6 +56,11 @@ export class Settings extends SliderComponent {
     this.currentMax.setValue(values.value)
   }
 
+  setRange() {
+    this.stick.toggle('visible')
+    this.currentMax.toggle('visible')
+  }
+
 
   onClick(e: MouseEvent) {    
     const $target = $(e.target as HTMLElement)
@@ -62,7 +69,10 @@ export class Settings extends SliderComponent {
     }
     if ($target.data('checkbox') === 'isScale') this.emitter.trigger('settingsToScale')
     if ($target.data('checkbox') === 'isLabel') this.emitter.trigger('settingsToLabel')
-    if ($target.data('checkbox') === 'isRange') this.emitter.trigger('settingsToView: range', this.currentMax.getValue())
+    if ($target.data('checkbox') === 'isRange') { 
+      this.emitter.trigger('settingsToView: range', this.currentMax.getValue())
+      this.setRange()
+    }
     if ($target.data('checkbox') === 'isVertical') this.emitter.trigger('settingsToView: vertical')
   }
 
