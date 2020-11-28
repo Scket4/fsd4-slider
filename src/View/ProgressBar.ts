@@ -29,18 +29,49 @@ export class ProgressBar extends SliderComponent {
   }
 
   pointMinChange(values: completeValue) {
-    if (!values.isVertical) {
-      this.$root.width(values.position)
-    } else {
-      this.$root.height(values.position)
+    if (values.isRange) {
+
+      if (!values.isVertical) {
+        this.$root.left(values.position)
+        this.$root.width(values.maxPos - values.minPos)
+      } else {
+        this.$root.top(values.minPos + 12.5)
+        this.$root.height(values.maxPos - values.minPos)
+      }
+
+    } else if (!values.isRange) {
+
+      if (values.isVertical) {
+        this.$root.top(12.5)
+        this.$root.height(values.minPos + 12.5)
+      } else {
+        console.log(values.isVertical)
+        this.$root.left(0)
+        this.$root.width(values.position)
+      }
     }
   }
 
   pointMaxChange(values: completeValue) {
-   if (values.isRange) {      
-      this.$root.width(values.maxPos - values.minPos)
-    } else {
-      this.pointMinChange(values)
+    if (values.isRange) {
+
+      if (!values.isVertical) {
+        this.$root.left(values.minPos + 12.5)
+        this.$root.width(values.maxPos - values.minPos)
+      } else {
+        this.$root.top(values.minPos + 12.5)
+        this.$root.height(values.maxPos - values.minPos)
+      }
+
+    } else if (!values.isRange) {
+
+      if (values.isVertical) {
+        this.$root.top(12.5)
+        this.$root.height(values.minPos + 12.5)
+      } else {
+        this.$root.left(0)
+        this.$root.width(values.minPos + 12.5)
+      }
     }
   }
 
