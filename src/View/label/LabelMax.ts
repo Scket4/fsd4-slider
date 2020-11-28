@@ -14,6 +14,14 @@ export class LabelMax extends SliderComponent{
 
   vertical() {
     this.$root.toggle('label-maxV')
+    if (this.$root.hasSelector('label-maxV')) {
+      this.$root.$el.style.top = '100%'
+      this.$root.left(-30)
+    } else {
+      this.$root.$el.style.left = '100%'
+      this.$root.top(-35)
+    }
+    this.$root.html('100')
   }
 
   setValues(values: presenterProperties) {

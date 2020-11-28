@@ -28,6 +28,13 @@ export class PointMax extends SliderComponent {
 
   vertical() {
     this.$root.toggle('point-maxV')
+    if (this.$root.hasSelector('point-maxV')) { 
+      this.$root.$el.style.top = '100%' 
+      this.$root.left(0)
+    } else {
+      this.$root.$el.style.left = '100%'
+      this.$root.top(0)
+    }
   }
 
   pointMaxChange(values: completeValue) {
@@ -52,7 +59,6 @@ export class PointMax extends SliderComponent {
   
   onMousedown(e: MouseEvent) {
     this.onClick = true
-    this.$root.$el.style.zIndex = '1000'
     this.shiftY = e.clientY - this.$root.$el.getBoundingClientRect().y - 12.5
     this.shiftX = e.clientX - this.$root.$el.getBoundingClientRect().x - 12.5
     document.onmousemove = e => {
@@ -60,7 +66,6 @@ export class PointMax extends SliderComponent {
     }
     document.onmouseup = () => {
       this.onClick = false
-      this.$root.$el.style.zIndex = '2'
       document.onmousedown = null
       document.onmousemove = null
     }

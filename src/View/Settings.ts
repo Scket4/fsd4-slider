@@ -46,6 +46,8 @@ export class Settings extends SliderComponent {
 
   vertical() {
     this.$root.toggle('settingsV')
+    this.currentMin.setValue(0)
+    this.currentMax.setValue(100)
   }
 
   pointMinChange(values: completeValue) {
